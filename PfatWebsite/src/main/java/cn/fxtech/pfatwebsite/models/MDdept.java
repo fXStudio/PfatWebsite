@@ -32,7 +32,7 @@ public class MDdept {
 	}
 
 	public void setParentId(Integer parentId) {
-		this.parentId = 1;
+		this.parentId = parentId;
 	}
 
 	public String getDeptName() {

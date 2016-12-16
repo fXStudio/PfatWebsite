@@ -1,6 +1,6 @@
-Ext.define('MenuItemModule.view.MenuItemForm', {
+Ext.define('CateManageModule.view.CateManageForm', {
 	extend: 'Ext.form.Panel',
-	alias: 'widget.menuitemform',
+	alias: 'widget.catemanageform',
 	
     border: false, // 不显示边线
     defaults: { // 组件的默认样式配置

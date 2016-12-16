@@ -149,7 +149,8 @@ final class MDdeptService implements IMDdeptService {
 		Example condition = new Example(MDdept.class);
 		condition.createCriteria().andNotEqualTo("id", 1);
 
-		return mddeptMapper.selectByExampleAndRowBounds(condition, new RowBounds(cf.getStart(), cf.getLimit() - cf.getStart()));
+		return mddeptMapper.selectByExampleAndRowBounds(condition,
+				new RowBounds(cf.getStart(), cf.getLimit() - cf.getStart()));
 	}
 
 	/**
@@ -175,6 +176,8 @@ final class MDdeptService implements IMDdeptService {
 			return new FeedBackMessage(false, "部门名称重复");
 		}
 
+		// 上级部门为 1
+		dept.setParentId(1);
 		if (dept.getId() == 0) {
 			log.debug("Create new dept name is: " + dept.getDeptName());
 			return new FeedBackMessage(mddeptMapper.insert(dept) > 1);

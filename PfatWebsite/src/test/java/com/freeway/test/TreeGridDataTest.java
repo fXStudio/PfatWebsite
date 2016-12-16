@@ -1,40 +1,32 @@
 package com.freeway.test;
 
-import java.util.ArrayList;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import cn.fxtech.pfatwebsite.models.EMcategory;
+
 public class TreeGridDataTest {
 	@Test
-	public void print() throws JsonProcessingException {
-		ObjectMapper om = new ObjectMapper();
+	public void print()
+			throws JsonProcessingException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		EMcategory bean = new EMcategory();
+		bean.setId(1);
+		bean.setCateName("ajaxfan");
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("text", ".");
-		map.put("children", getChilds());
+		Map db = new HashMap();
 
-		System.out.println(om.writeValueAsString(map));
-	}
-
-	private List getChilds() {
-		List list = new ArrayList();
-
-		for (int i = 0; i < 5; i++) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("task", i + "_txt");
-			map.put("duration", i);
-			map.put("leaf", false);
-			map.put("user", i + "_user");
-			map.put("iconCls", "task");
-			
-			list.add(map);
+		for (Field field : bean.getClass().getDeclaredFields()) {
+			BeanUtils.setProperty(db, field.getName(), BeanUtils.getProperty(bean, field.getName()));
 		}
-		return list;
+		
+		System.out.println(new ObjectMapper().writeValueAsString(db));
 	}
 }
