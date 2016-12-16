@@ -2,6 +2,9 @@ package cn.fxtech.pfatwebsite.services;
 
 import java.util.List;
 
+import cn.fxtech.pfatwebsite.messages.FeedBackMessage;
+import cn.fxtech.pfatwebsite.models.MDdept;
+import cn.fxtech.pfatwebsite.protocal.ConditionFiled;
 import cn.fxtech.pfatwebsite.tree.inters.INode;
 
 /**
@@ -10,13 +13,13 @@ import cn.fxtech.pfatwebsite.tree.inters.INode;
  * @author FXStudio.Ajaxfan
  */
 public interface IMDdeptService {
-	/**
-	 * @return
-	 */
-	public List<INode> findAll(Integer deptid);
+	public List<INode> findByDeptid(Integer deptid);
 
-	/**
-	 * @return
-	 */
 	public List<INode> deptTree(Integer userid);
+
+	public List<MDdept> findAll(ConditionFiled cf);
+
+	public FeedBackMessage addOrUpdate(MDdept dept);
+
+	public FeedBackMessage del(Integer id);
 }

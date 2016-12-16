@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.fxtech.pfatwebsite.helper.StringHelper;
-import cn.fxtech.pfatwebsite.mappers.system.OSgroupMapper;
-import cn.fxtech.pfatwebsite.mappers.system.OSuserMapper;
+import cn.fxtech.pfatwebsite.mappers.OSgroupMapper;
+import cn.fxtech.pfatwebsite.mappers.OSuserMapper;
 import cn.fxtech.pfatwebsite.messages.FeedBackMessage;
 import cn.fxtech.pfatwebsite.models.OSuser;
 import cn.fxtech.pfatwebsite.models.OSusergroup;

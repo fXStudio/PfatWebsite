@@ -6,17 +6,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * 收费站
- * 
  * @author FXStudio.Ajaxfan
  */
-@Table(name = "os_dept")
-public class MDdept {
+@Table(name = "os_dictionary")
+public class MDdatadictory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Integer parentId;
-	private String deptName;
+	private String itemName;
+	private String itemVal;
 	private String remark;
 
 	public Integer getId() {
@@ -24,23 +22,23 @@ public class MDdept {
 	}
 
 	public void setId(Integer id) {
-		this.id = id == null ? 0 : id;
+		this.id = id;
 	}
 
-	public Integer getParentId() {
-		return parentId;
+	public String getItemName() {
+		return itemName;
 	}
 
-	public void setParentId(Integer parentId) {
-		this.parentId = 1;
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 
-	public String getDeptName() {
-		return deptName;
+	public String getItemVal() {
+		return itemVal;
 	}
 
-	public void setDeptName(String deptName) {
-		this.deptName = deptName;
+	public void setItemVal(String itemVal) {
+		this.itemVal = itemVal;
 	}
 
 	public String getRemark() {

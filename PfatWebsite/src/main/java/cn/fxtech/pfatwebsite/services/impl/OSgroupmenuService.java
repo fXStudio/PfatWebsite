@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.fxtech.pfatwebsite.mappers.system.OSgroupmenuMapper;
+import cn.fxtech.pfatwebsite.mappers.OSgroupmenuMapper;
 import cn.fxtech.pfatwebsite.messages.FeedBackMessage;
 import cn.fxtech.pfatwebsite.models.OSgroupmenu;
 import cn.fxtech.pfatwebsite.services.IOSgroupmenuService;

@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.fxtech.pfatwebsite.mappers.system.OSgroupMapper;
-import cn.fxtech.pfatwebsite.mappers.system.OSgroupmenuMapper;
-import cn.fxtech.pfatwebsite.mappers.system.OSmenuitemMapper;
-import cn.fxtech.pfatwebsite.mappers.system.OSmenuMapper;
-import cn.fxtech.pfatwebsite.mappers.system.OSmenumenuitemMapper;
+import cn.fxtech.pfatwebsite.mappers.OSgroupMapper;
+import cn.fxtech.pfatwebsite.mappers.OSgroupmenuMapper;
+import cn.fxtech.pfatwebsite.mappers.OSmenuMapper;
+import cn.fxtech.pfatwebsite.mappers.OSmenuitemMapper;
+import cn.fxtech.pfatwebsite.mappers.OSmenumenuitemMapper;
 import cn.fxtech.pfatwebsite.messages.FeedBackMessage;
 import cn.fxtech.pfatwebsite.models.OSusergroup;
 import cn.fxtech.pfatwebsite.models.OSgroupmenu;

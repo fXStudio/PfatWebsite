@@ -3,19 +3,23 @@ package cn.fxtech.pfatwebsite.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.fxtech.pfatwebsite.mappers.system.MDdeptMapper;
-import cn.fxtech.pfatwebsite.mappers.system.OSuserMapper;
+import cn.fxtech.pfatwebsite.mappers.MDdeptMapper;
+import cn.fxtech.pfatwebsite.mappers.OSuserMapper;
+import cn.fxtech.pfatwebsite.messages.FeedBackMessage;
 import cn.fxtech.pfatwebsite.models.MDdept;
 import cn.fxtech.pfatwebsite.models.OSuser;
+import cn.fxtech.pfatwebsite.protocal.ConditionFiled;
 import cn.fxtech.pfatwebsite.services.IMDdeptService;
 import cn.fxtech.pfatwebsite.tree.CheckedNode;
 import cn.fxtech.pfatwebsite.tree.NormalNode;
 import cn.fxtech.pfatwebsite.tree.inters.INode;
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.entity.Example.Criteria;
 
 /**
  * 部门信息
@@ -37,7 +41,7 @@ final class MDdeptService implements IMDdeptService {
 	 * @return
 	 */
 	@Override
-	public List<INode> findAll(Integer deptid) {
+	public List<INode> findByDeptid(Integer deptid) {
 		List<INode> list = new ArrayList<INode>();
 		Example condition = new Example(MDdept.class);
 		condition.createCriteria().andEqualTo("id", deptid);
@@ -64,7 +68,7 @@ final class MDdeptService implements IMDdeptService {
 	public List<INode> deptTree(Integer userId) {
 		List<INode> list = new ArrayList<INode>();
 		Example condition = new Example(MDdept.class);
-		condition.createCriteria().andEqualTo("deptType", 1);
+		condition.createCriteria().andEqualTo("id", 1);
 
 		// 部门编号
 		Integer depid = getDepIdFromUser(userId);
@@ -135,5 +139,47 @@ final class MDdeptService implements IMDdeptService {
 			return null;
 		}
 		return user.getDeptId();
+	}
+
+	/**
+	 * 查询所有的部门信息
+	 */
+	@Override
+	public List<MDdept> findAll(ConditionFiled cf) {
+		Example condition = new Example(MDdept.class);
+		condition.createCriteria().andNotEqualTo("id", 1);
+
+		return mddeptMapper.selectByExampleAndRowBounds(condition, new RowBounds(cf.getStart(), cf.getLimit() - cf.getStart()));
+	}
+
+	/**
+	 * 删除记录
+	 */
+	@Override
+	public FeedBackMessage del(Integer id) {
+		return new FeedBackMessage(mddeptMapper.deleteByPrimaryKey(id) > 0);
+	}
+
+	/**
+	 * 添加或删除部门信息
+	 */
+	@Override
+	public FeedBackMessage addOrUpdate(MDdept dept) {
+		Example condition = new Example(MDdept.class);
+		Criteria criteria = condition.createCriteria();
+		criteria.andNotEqualTo("id", dept.getId());
+		criteria.andEqualTo("deptName", dept.getDeptName());
+
+		if (mddeptMapper.selectByExample(condition).size() > 0) {
+			log.debug("Dept name duplicate: " + dept.getDeptName());
+			return new FeedBackMessage(false, "部门名称重复");
+		}
+
+		if (dept.getId() == 0) {
+			log.debug("Create new dept name is: " + dept.getDeptName());
+			return new FeedBackMessage(mddeptMapper.insert(dept) > 1);
+		}
+		log.debug("update dept name is: " + dept.getDeptName());
+		return new FeedBackMessage(mddeptMapper.updateByPrimaryKey(dept) > 1);
 	}
 }

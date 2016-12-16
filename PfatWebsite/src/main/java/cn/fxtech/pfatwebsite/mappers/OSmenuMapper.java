@@ -1,4 +1,4 @@
-package cn.fxtech.pfatwebsite.mappers.system;
+package cn.fxtech.pfatwebsite.mappers;
 
 import cn.fxtech.pfatwebsite.models.OSmenu;
 import tk.mybatis.mapper.common.Mapper;

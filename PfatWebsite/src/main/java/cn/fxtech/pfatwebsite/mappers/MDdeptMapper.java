@@ -1,4 +1,4 @@
-package cn.fxtech.pfatwebsite.mappers.system;
+package cn.fxtech.pfatwebsite.mappers;
 
 import cn.fxtech.pfatwebsite.models.MDdept;
 import tk.mybatis.mapper.common.Mapper;
@@ -8,5 +8,5 @@ import tk.mybatis.mapper.common.Mapper;
  * 
  * @author FXStudio.Ajaxfan
  */
-public interface MDdeptMapper extends Mapper<MDdept>{
+public interface MDdeptMapper extends Mapper<MDdept> {
 }

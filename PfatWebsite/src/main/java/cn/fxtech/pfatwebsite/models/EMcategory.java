@@ -5,18 +5,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- * 收费站
- * 
- * @author FXStudio.Ajaxfan
- */
-@Table(name = "os_dept")
-public class MDdept {
+@Table(name = "em_category")
+public class EMcategory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	private String cateName;
+	private Integer cateScore;
 	private Integer parentId;
-	private String deptName;
 	private String remark;
 
 	public Integer getId() {
@@ -24,7 +20,23 @@ public class MDdept {
 	}
 
 	public void setId(Integer id) {
-		this.id = id == null ? 0 : id;
+		this.id = id;
+	}
+
+	public String getCateName() {
+		return cateName;
+	}
+
+	public void setCateName(String cateName) {
+		this.cateName = cateName;
+	}
+
+	public Integer getCateScore() {
+		return cateScore;
+	}
+
+	public void setCateScore(Integer cateScore) {
+		this.cateScore = cateScore;
 	}
 
 	public Integer getParentId() {
@@ -32,15 +44,7 @@ public class MDdept {
 	}
 
 	public void setParentId(Integer parentId) {
-		this.parentId = 1;
-	}
-
-	public String getDeptName() {
-		return deptName;
-	}
-
-	public void setDeptName(String deptName) {
-		this.deptName = deptName;
+		this.parentId = parentId;
 	}
 
 	public String getRemark() {

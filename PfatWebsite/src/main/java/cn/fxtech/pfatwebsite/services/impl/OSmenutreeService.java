@@ -7,10 +7,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.fxtech.pfatwebsite.mappers.system.OSgroupmenuMapper;
-import cn.fxtech.pfatwebsite.mappers.system.OSmenuMapper;
-import cn.fxtech.pfatwebsite.mappers.system.OSmenuitemMapper;
-import cn.fxtech.pfatwebsite.mappers.system.OSmenumenuitemMapper;
+import cn.fxtech.pfatwebsite.mappers.OSgroupmenuMapper;
+import cn.fxtech.pfatwebsite.mappers.OSmenuMapper;
+import cn.fxtech.pfatwebsite.mappers.OSmenuitemMapper;
+import cn.fxtech.pfatwebsite.mappers.OSmenumenuitemMapper;
 import cn.fxtech.pfatwebsite.models.OSgroupmenu;
 import cn.fxtech.pfatwebsite.models.OSmenu;
 import cn.fxtech.pfatwebsite.models.OSmenuitem;

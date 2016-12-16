@@ -17,8 +17,8 @@ Ext.define('MainModule.controller.TreePanelController', {
         		'itemclick': function (view, record, item, index, e, option) {
                     if (record.get('leaf')) { 
                     	var tabPanel = this.getTabPanel();// TabPanel对象
-                    	var sn = record.get('sn');// Node ID
-                        var tabToCheck = document.getElementById(sn);// 检查标签是否已经打开
+                    	var sn = record.get('sn') + '_menuitem';// Node ID
+                        var tabToCheck = tabPanel.getChildByElement(sn);// 检查标签是否已经打开
                         
                         // 如果节点已经打开，则只是激活标签，不在重复开启
                         if(tabToCheck){
