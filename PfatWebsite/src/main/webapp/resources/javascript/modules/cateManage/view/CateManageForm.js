@@ -12,29 +12,37 @@ Ext.define('CateManageModule.view.CateManageForm', {
         anchor: "98%"
     },
     items: [{
-        fieldLabel: '主键',
         name: 'id',
         hidden: true,
         hideLabel: true
     }, {
-        id: 'itemname',
-        fieldLabel: '菜单名称',
-        name: 'itemName',
+        name: 'level',
+        hidden: true,
+        hideLabel: true
+    },{
+        name: 'parentId',
+        hidden: true,
+        hideLabel: true
+    },{
+        id: 'catename',
+        fieldLabel: '分类名称',
+        name: 'cateName',
         maxLength: 30,
         selectOnFocus: true,
         allowBlank: false
     }, {
-        fieldLabel: '访问路径',
-        name: 'itemPath',
-        maxLength: 255,
+        fieldLabel: '分数',
+        name: 'cateScore',
+        maxLength: 3,
+        regex: new RegExp("^[1-9]\\d{0,2}$"),
+        regexText: '只能输入大于1的3位有效数字',
         allowBlank: false,
+        selectOnFocus: true
+    }, {
+        fieldLabel: '备注',
+        name: 'remark',
+        maxLength: 255,
         selectOnFocus: true,
         enableKeyEvents: true
-    }, {
-        xtype: 'checkbox',
-        fieldLabel: '是否锁定',
-        name: 'islock',
-        inputValue: '1',
-        style: 'margin-top: 6px;'
     }]
 });

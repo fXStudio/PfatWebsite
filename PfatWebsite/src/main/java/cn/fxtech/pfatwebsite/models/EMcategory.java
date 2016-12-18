@@ -14,6 +14,7 @@ public class EMcategory {
 	private Integer cateScore;
 	private Integer parentId;
 	private String remark;
+	private Integer level;
 
 	public Integer getId() {
 		return id;
@@ -53,5 +54,13 @@ public class EMcategory {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
 	}
 }

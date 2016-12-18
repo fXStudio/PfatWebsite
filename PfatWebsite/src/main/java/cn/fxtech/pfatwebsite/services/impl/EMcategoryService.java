@@ -13,6 +13,8 @@ import cn.fxtech.pfatwebsite.mappers.EMcategoryMapper;
 import cn.fxtech.pfatwebsite.messages.FeedBackMessage;
 import cn.fxtech.pfatwebsite.models.EMcategory;
 import cn.fxtech.pfatwebsite.services.IEMcategoryService;
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.entity.Example.Criteria;
 
 /**
  * 系统菜单项
@@ -24,12 +26,29 @@ final class EMcategoryService implements IEMcategoryService {
 	/** 日志工具 */
 	private Logger log = Logger.getLogger(EMcategoryService.class);
 
+	/** 根据现在的需求，树的最大深度为3 */
+	private static final int LEAF_DEEP = 3;
+
 	private @Autowired EMcategoryMapper emcategoryMapper;
 
 	@Override
 	public FeedBackMessage addOrUpdate(EMcategory cate) {
-		log.debug("Create new category: " + cate.getCateName());
-		return null;
+		Example condition = new Example(EMcategory.class);
+		Criteria criteria = condition.createCriteria();
+		criteria.andNotEqualTo("id", cate.getId());
+		criteria.andEqualTo("cateName", cate.getCateName());
+
+		if (emcategoryMapper.selectByExample(condition).size() > 0) {
+			log.debug("Category name duplicate: " + cate.getCateName());
+			return new FeedBackMessage(false, "考核分类名称重复");
+		}
+
+		if (cate.getId() == 0) {
+			log.debug("Create new Category name is: " + cate.getCateName());
+			return new FeedBackMessage(emcategoryMapper.insert(cate) > 1);
+		}
+		log.debug("Update Category name is: " + cate.getCateName());
+		return new FeedBackMessage(emcategoryMapper.updateByPrimaryKey(cate) > 1);
 	}
 
 	/**
@@ -38,7 +57,14 @@ final class EMcategoryService implements IEMcategoryService {
 	@Override
 	public FeedBackMessage del(Integer id) {
 		log.debug("Delete category and it's child category: " + id);
-		return new FeedBackMessage(emcategoryMapper.deleteByPrimaryKey(id) > 0);
+
+		try {
+			emcategoryMapper.delRecursion(id);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return new FeedBackMessage(false, e.getMessage());
+		}
+		return new FeedBackMessage(true);
 	}
 
 	/**
@@ -52,14 +78,13 @@ final class EMcategoryService implements IEMcategoryService {
 			// 用DynaBean来做树节点对象(利用Json的灵活性特点，不需要单独声明类)
 			Map<String, Object> map = BeanUtils.createMap(cate);
 
-			List<Map<String, Object>> subnodes = getCateTreeModel(cate.getId());
-			boolean isLeaf = subnodes.size() == 0;
+			boolean isLeaf = cate.getLevel() == LEAF_DEEP;
 
 			map.put("leaf", isLeaf);
 			map.put("iconCls", isLeaf ? "leaf_node" : "branch_node");
 
 			if (!isLeaf) {// 只有非叶子节点才能有子节点
-				map.put("children", subnodes);
+				map.put("children", getCateTreeModel(cate.getId()));
 				map.put("expanded", true);
 			}
 			result.add(map);

@@ -40,9 +40,9 @@ public class EMcategoryController {
 	 * @throws JsonProcessingException
 	 */
 	@RequestMapping(value = "cateTreeList")
-	public Object cateTreeList() throws JsonProcessingException {
+	public Object cateTreeList(@RequestParam(value="cateName", required = false) String catename) throws JsonProcessingException {
 		Map<String, Object> res = new HashMap<String, Object>();
-		res.put("text", ".");
+		res.put("cateName", ".");
 		res.put("children", emcategoryService.getCateTreeModel(0));
 		
 		log.debug("Request category tree list: " + new ObjectMapper().writeValueAsString(res));
@@ -70,6 +70,8 @@ public class EMcategoryController {
 	 */
 	@RequestMapping(value = "categoryModify")
 	public Object categoryModify(EMcategory cate) {
+		log.debug("Request save&modify category: " + cate.getCateName());
+		
 		return emcategoryService.addOrUpdate(cate);
 	}
 }
