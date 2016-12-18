@@ -141,7 +141,7 @@ Ext.define('CateManageModule.view.CateManageGrid', {
                    },
             	   beforedrop: function(node, data, overModel, dropPosition, dropHandlers) {
             		    dropHandlers.wait = true;// 挂起拖动事件
-            		    Ext.MessageBox.confirm('调整分类', '确定要调整当前分类信息位置吗?', function(btn){
+            		    Ext.MessageBox.confirm('调整节点位置', '节点位置发生变更，可能造成已维护的绩效数据丢失，确定要执行此操作吗?', function(btn){
             		        if (btn === 'yes') {
             		            dropHandlers.processDrop();
             		        } else {
