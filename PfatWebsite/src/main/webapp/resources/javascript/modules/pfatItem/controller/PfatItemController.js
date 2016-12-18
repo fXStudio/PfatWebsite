@@ -17,6 +17,9 @@ Ext.define('PfatItemModule.controller.PfatItemController', {
 	    			Ext.each(['addBtn', 'modifyBtn', 'delBtn'], function(id){
 	    				Ext.getCmp(id).setDisabled(isdisabled);
 	    			});
+	    			if(!isdisabled) {
+	    				this.getPfatItemPanel().getStore().load({params: { cateId: record.data.id }});
+	    			}
 	    		}
 	    	},
  	    	'textfield[name=searchField]': {
