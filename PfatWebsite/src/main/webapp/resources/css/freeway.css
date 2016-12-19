@@ -15,6 +15,9 @@
     background-image: url(../images/del.png) !important;
 }
 
+.upload {
+    background: url(../images/image_add.png) no-repeat 0 0 !important;
+}
 .update {
     background-image: url(../images/update.png) !important;
 }
@@ -25,9 +28,22 @@
     background-image: url(../images/feed-icon.png) !important;
 }
 
-.complete span.x-tree-node-text  {
-    text-decoration: line-through;
-    color: #777;
+.pfat-label{
+	padding:3px 8px;
+	border: solid 1px white;
+	color:white;
+}
+.commit-review {
+	background-color: #64788f;
+}
+.new-pfatitem{
+	background-color: #bf9489;
+}
+.process-pfatitem{
+	background-color: #77aa61;
+}
+.failure-pfatitem {
+	background-color: #e13d11;
 }
 
 .tips {

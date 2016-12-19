@@ -3,6 +3,6 @@ Ext.define('PfatItemModule.model.PfatItem', {
     
     fields: [
 	    {name: 'id', type: 'int', defaultValue: 0},  'itemName',  'cateId',  {name: 'compDate', type: 'date', defaultValue: new Date()}, 'itemScore', 'docName',
-	    'deptId', 'officeName', 'personName', 'telPhone', 'remark', 'statusId'
+	    'deptId', 'officeName', 'personName', 'telPhone', 'remark', {name: 'status', type: 'int', default: 0}
     ]
 }); 

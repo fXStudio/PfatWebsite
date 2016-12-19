@@ -86,8 +86,8 @@ final class EMpfatitemService implements IEMpfatitemService {
 		} else if (pfatitem.getDeptId() != null) {// 按部门搜索
 			log.debug("Search pfatitems by deptId: " + pfatitem.getDeptId());
 			criteria.andEqualTo("deptId", pfatitem.getCateId());
-		} else if (pfatitem.getStatusId() != null) {// 安状态搜索
-			log.debug("Search pfatitems by statusId: " + pfatitem.getStatusId());
+		} else if (pfatitem.getStatus() != null) {// 按状态搜索
+			log.debug("Search pfatitems by statusId: " + pfatitem.getStatus());
 			criteria.andEqualTo("statusId", pfatitem.getCateId());
 		}
 		return empfatitemMapper.selectByExample(condition);

@@ -16,7 +16,7 @@ public class EMpfatitem {
 	private Integer id;
 	private String itemName;
 	private Integer cateId;
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date compDate;
 	private Integer itemScore;
 	private String docName;
@@ -25,7 +25,7 @@ public class EMpfatitem {
 	private String personName;
 	private String telPhone;
 	private String remark;
-	private Integer statusId;
+	private Integer status;
 
 	public Integer getId() {
 		return id;
@@ -115,11 +115,11 @@ public class EMpfatitem {
 		this.remark = remark;
 	}
 
-	public Integer getStatusId() {
-		return statusId;
+	public Integer getStatus() {
+		return status;
 	}
 
-	public void setStatusId(Integer statusId) {
-		this.statusId = statusId;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 }
