@@ -51,6 +51,7 @@ final class EMpfatitemService implements IEMpfatitemService {
 		Example condition = new Example(EMpfatitem.class);
 		Criteria criteria = condition.createCriteria();
 		criteria.andNotEqualTo("id", pfatitem.getId());
+		criteria.andEqualTo("cateId", pfatitem.getCateId());
 		criteria.andEqualTo("itemName", pfatitem.getItemName());
 
 		if (empfatitemMapper.selectByExample(condition).size() > 0) {

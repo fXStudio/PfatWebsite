@@ -1,6 +1,6 @@
 package cn.fxtech.pfatwebsite.models;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +17,7 @@ public class EMpfatitem {
 	private String itemName;
 	private Integer cateId;
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Timestamp compDate;
+	private Date compDate;
 	private Integer itemScore;
 	private String docName;
 	private Integer deptId;
@@ -51,11 +51,11 @@ public class EMpfatitem {
 		this.cateId = cateId;
 	}
 
-	public Timestamp getCompDate() {
+	public Date getCompDate() {
 		return compDate;
 	}
 
-	public void setCompDate(Timestamp compDate) {
+	public void setCompDate(Date compDate) {
 		this.compDate = compDate;
 	}
 

@@ -3,7 +3,7 @@ Ext.define('PfatItemModule.store.PfatItemStore', {
     model: 'PfatItemModule.model.PfatItem',
     
     autoLoad: false,
-    autoSync: true,
+    autoSync: false,
     proxy: {
         type : 'ajax',
         actionMethods: { read: 'POST' },

@@ -4,9 +4,8 @@ Ext.define('PfatItemModule.controller.PfatItemController', {
     refs: [
         {ref: 'gridPanel', selector: 'categrid'},
         {ref: 'pfatItemPanel', selector: 'pfatitemgrid'},
-        {ref: 'window', selector: 'pfatitemwindow'},
         {ref: 'formPanel', selector: 'pfatitemform'},
-        {ref: 'submitBtn', selector: 'button[action=submit]'}
+        {ref: 'cateid', selector: 'textfield[name=cateid]'}
      ],
      init: function() {
  	    this.control({
@@ -14,12 +13,11 @@ Ext.define('PfatItemModule.controller.PfatItemController', {
 	    		itemclick: function(view, record, item, index, e, eOpts){
 	    			var isdisabled = record.data.level < 3;
 	    			
-	    			Ext.each(['addBtn', 'modifyBtn', 'delBtn'], function(id){
+	    			Ext.each(['addBtn'], function(id){
 	    				Ext.getCmp(id).setDisabled(isdisabled);
 	    			});
-	    			if(!isdisabled) {
-	    				this.getPfatItemPanel().getStore().load({params: { cateId: record.data.id }});
-	    			}
+    				this.getCateid().setValue(record.data.id);
+    				this.getPfatItemPanel().getStore().load({params: { cateId: record.data.id }});
 	    		}
 	    	},
  	    	'textfield[name=searchField]': {
@@ -33,41 +31,7 @@ Ext.define('PfatItemModule.controller.PfatItemController', {
 		    			 });
 	                 }
                  }
-	    	 },
-	        'button[action=submit]': {
-	        	click: function() {
-	                var formObj = this.getFormPanel().getForm();
-	                var gridPanel = this.getGridPanel();
-	            	var window = this.getWindow();
-	                
-	                // 检查表单项的录入是否存在问题
-	                if (formObj.isValid()) {
-	                    formObj.submit({
-	                        waitMsg: '数据正在处理请稍后', // 提示信息  
-	                        waitTitle: '提示', // 标题  
-	                        url: 'services/categoryModify', // 请求的url地址  
-	                        method: 'POST', // 请求方式  
-	                        success: function(form, action) { // 添加数据成功后，重新加载数据源刷新表单 
-	                        	gridPanel.getStore().load();
-	                        },
-	                        failure: function(form, action) { // 添加失败后，提示用户添加异常
-	                            Ext.Msg.alert('失败', '操作未完成，原因：' + action.result.failureReason);
-	                        }
-	                    });
-	                    setTimeout(function() { window.hide(); }, 100);
-	                }
-	            }
-	        },
-		     'button[action=cancel]': {
-	        	click: function() {
-		        	this.getWindow().hide();
-	        	}
-	        },
-	        'catemanagewindow': {
-	        	show: function(){
-	                Ext.getCmp('catename').focus(true, 100);
-	        	}
-	        }
+	    	 }
  	    })
      },
 
@@ -75,10 +39,8 @@ Ext.define('PfatItemModule.controller.PfatItemController', {
       * Module Launch
       */
 	 onLaunch: function() {
-		// 应用启动，先创建窗口对象，避免后面数据的重复拉取
-		Ext.create('PfatItemModule.view.PfatItemWindow');	
-
 		var gridObj = this.getGridPanel();
+		var pfatItemPanel = this.getPfatItemPanel();
 		gridObj.on({// 节点重新展开后，需要提交过滤条件给组件，否则会出现数据不一致的问题
 			'itemexpand': function(){
 	   			 gridObj.filterBy(function(node){
@@ -86,6 +48,7 @@ Ext.define('PfatItemModule.controller.PfatItemController', {
 	   			 });
 			} 
 		});
+		
 		gridObj.getStore().on({
 			'load': function(){
 				Ext.getCmp('searchField').focus();

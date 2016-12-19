@@ -1,6 +1,6 @@
 package cn.fxtech.pfatwebsite.controllers.em;
 
-import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +11,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.fxtech.pfatwebsite.messages.FeedBackMessage;
 import cn.fxtech.pfatwebsite.models.EMpfatitem;
@@ -42,7 +45,7 @@ public class EMpfatitemController {
 	 */
 	@RequestMapping(value = "pfatitemList")
 	public Object pfatitemList(EMpfatitem item) {
-		List list = empfatitemService.findRecords(item);
+		List<EMpfatitem> list = empfatitemService.findRecords(item);
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("totalCount", list.size());// 记录总数
@@ -61,9 +64,22 @@ public class EMpfatitemController {
 	 * @return
 	 */
 	@RequestMapping(value = "delPfatitem")
-	public Object delStatus(@RequestParam(value = "id", required = true) Integer id) {
-		log.debug("Delete pfatitem: " + id);
-		return empfatitemService.del(id);
+	public Object delStatus(HttpServletRequest request) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			EMpfatitem item = mapper.readValue(request.getReader(), EMpfatitem.class);
+
+			log.debug("Delete pfatitem name is: " + item.getItemName());
+
+			return empfatitemService.del(item.getId());
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new FeedBackMessage(false, "系统异常，请联系管理员");
 	}
 
 	/**
@@ -73,29 +89,9 @@ public class EMpfatitemController {
 	 * @return
 	 */
 	@RequestMapping(value = "pfatitemModify")
-	public Object statusModify(EMpfatitem item, HttpServletRequest request) {
-		try {
-			BufferedReader reader = request.getReader();
-
-			StringBuilder sb = new StringBuilder();
-			char[] buff = new char[1024];
-			int len = -1;
-
-			while((len = reader.read(buff)) != -1) {
-			    sb.append(buff, 0, len);
-			}
-
-			reader.close();
-
-			// example
-			log.debug( sb.toString() ); // {"name":"zhangsan", "age": 28}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		log.debug("User Request SaveOrUpdate pfatitem: " + item.getId());
+	public Object statusModify(EMpfatitem item) {
+		log.debug("Save | Update pfatitem name is: " + item.getItemName());
 		
-		return new FeedBackMessage(true);
-
-//		return empfatitemService.addOrUpdate(item);
+		return empfatitemService.addOrUpdate(item);
 	}
 }

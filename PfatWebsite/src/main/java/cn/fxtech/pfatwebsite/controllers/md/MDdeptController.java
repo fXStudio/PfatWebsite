@@ -59,6 +59,20 @@ public class MDdeptController {
 	public Object departmentList(@RequestParam(value = "userId", required = false, defaultValue = "0") Integer userId) {
 		return mddeptService.deptTree(userId);
 	}
+	
+	/**
+	 * 机构部门
+	 *
+	 * @param limit
+	 *            开始索引
+	 * @param start
+	 *            结束索引
+	 * @return
+	 */
+	@RequestMapping(value = "combDeptList")
+	public Object combDeptList() {
+		return mddeptService.findAll(new ConditionFiled());
+	}
 
 	/**
 	 * 列出所有的部门信息

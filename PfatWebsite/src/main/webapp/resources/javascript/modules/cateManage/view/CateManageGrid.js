@@ -156,8 +156,6 @@ Ext.define('CateManageModule.view.CateManageGrid', {
              		   
              		   rec.data.level = ++level;
              		   
-             		   console.log(data.records.length);
-             		   
        	               mask.show();
              		   Ext.Ajax.request({
 	                         url: 'services/categoryModify',

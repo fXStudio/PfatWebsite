@@ -7,7 +7,8 @@ Ext.define('PfatItemModule.view.Viewport', {
     items: [{
         xtype: 'categrid',
         region: 'north',
-        height: 240
+        resizable: true,
+        height: 190
     }, {
     	xtype: 'pfatitemgrid',
     	title: '考核项目',
