@@ -87,7 +87,7 @@ Ext.define('DeptPfatItemModule.controller.PfatfileController', {
 	    var me = this;
 	    
         // 装载数据
-        store.load();
+        store.load({params: {status: "0,3"}});
 
 	    // 设置首行选中
         store.on("load", function(){

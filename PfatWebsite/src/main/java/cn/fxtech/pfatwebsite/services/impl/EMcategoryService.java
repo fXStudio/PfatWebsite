@@ -45,10 +45,10 @@ final class EMcategoryService implements IEMcategoryService {
 
 		if (cate.getId() == 0) {
 			log.debug("Create new Category name is: " + cate.getCateName());
-			return new FeedBackMessage(emcategoryMapper.insert(cate) > 1);
+			return new FeedBackMessage(emcategoryMapper.insert(cate) > 0);
 		}
 		log.debug("Update Category name is: " + cate.getCateName());
-		return new FeedBackMessage(emcategoryMapper.updateByPrimaryKey(cate) > 1);
+		return new FeedBackMessage(emcategoryMapper.updateByPrimaryKey(cate) > 0);
 	}
 
 	/**

@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -68,10 +69,10 @@ public class EMpfatitemController {
 	 * @return
 	 */
 	@RequestMapping(value = "deptitemList")
-	public Object deptitemList(HttpServletRequest request) {
+	public Object deptitemList(HttpServletRequest request, @RequestParam(value="status") String status) {
 		OSuser user = (OSuser)request.getSession().getAttribute("pfatUser");
 		
-		List<EMpfatitem> list = empfatitemService.findRecordsByDept(user.getDeptId());
+		List<EMpfatitem> list = empfatitemService.findRecordsByDept(user.getDeptId(), status);
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("totalCount", list.size());// 记录总数

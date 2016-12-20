@@ -31,23 +31,16 @@ Ext.define('PfatItemModule.view.PfatItemGrid', {
                          params: context.record.data,
                          method: 'POST',
                          success: function(response, options) {
-                             var obj = Ext.decode(response.responseText);
-
-                             if (obj.success) {// 根据不同的删除状态，做不同的提示
-                             	store.reload();
-                             	store.on({
-                             		'load': function(){
-                        	              mask.hide();
-                             		}
-                             	})
-                             } else {
-                  	             mask.hide();
-                                 Ext.MessageBox.alert('失败', '删除失败, 原因：' + obj.failureReason);
-                             }
+                         	store.reload();
+                         	store.on({
+                         		'load': function(){
+                    	              mask.hide();
+                         		}
+                         	});
                          },
-                         failure: function(response, options) {
+                         failure: function(response, action) {
               	             mask.hide();
-                             Ext.MessageBox.alert('失败', '请求超时或网络故障, 错误编号：' + response.status);
+                             Ext.MessageBox.alert('失败', '操作失败：' + action.result.failureReason);
                          }
                     });
                     me.down('#addBtn').setDisabled(false);

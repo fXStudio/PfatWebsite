@@ -65,16 +65,10 @@ Ext.define('MdDeptModule.controller.MdDeptController', {
 	                            params: { id: sm.getLastSelected().get('id') },
 	                            method: 'POST',
 	                            success: function(response, options) {
-	                                var obj = Ext.decode(response.responseText);
-
-	                                if (obj.success) {// 根据不同的删除状态，做不同的提示
-	                                    gridObj.getStore().reload();
-	                                } else {
-	                                    Ext.MessageBox.alert('失败', '删除失败, 原因：' + obj.failureReason);
-	                                }
+                                    gridObj.getStore().reload();
 	                            },
-	                            failure: function(response, options) {
-	                                Ext.MessageBox.alert('失败', '请求超时或网络故障, 错误编号：' + response.status);
+	                            failure: function(response, action) {
+	                                Ext.MessageBox.alert('失败', '操作失败：' + action.result.failureReason);
 	                            }
 	                        });
 	                    }
@@ -95,8 +89,7 @@ Ext.define('MdDeptModule.controller.MdDeptController', {
 	                        url: 'services/mdDeptModify', // 请求的url地址  
 	                        method: 'POST', // 请求方式  
 	                        success: function(form, action) { // 添加数据成功后，重新加载数据源刷新表单 
-	                        	gridPanel.getStore().loadRawData();
-	                        	gridPanel.getStore().load();
+	                        	gridPanel.getStore().reload();
 	                        },
 	                        failure: function(form, action) { // 添加失败后，提示用户添加异常
 	                            Ext.Msg.alert('失败', '操作未完成，原因：' + action.result.failureReason);

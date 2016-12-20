@@ -17,5 +17,5 @@ public interface IEMpfatitemService {
 
 	public List<EMpfatitem> findRecords(EMpfatitem pfatitem);
 
-	public List<EMpfatitem> findRecordsByDept(Integer deptId);
+	public List<EMpfatitem> findRecordsByDept(Integer deptId, String status);
 }

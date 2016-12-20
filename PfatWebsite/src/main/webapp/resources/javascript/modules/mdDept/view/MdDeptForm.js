@@ -27,7 +27,7 @@ Ext.define('MdDeptModule.view.MdDeptForm', {
         fieldLabel: '描述',
         name: 'remark',
         maxLength: 255,
-        allowBlank: false,
+        allowBlank: true,
         selectOnFocus: true,
         enableKeyEvents: true
     }]

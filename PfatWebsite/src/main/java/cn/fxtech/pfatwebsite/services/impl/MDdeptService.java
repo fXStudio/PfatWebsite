@@ -180,9 +180,9 @@ final class MDdeptService implements IMDdeptService {
 		dept.setParentId(1);
 		if (dept.getId() == 0) {
 			log.debug("Create new dept name is: " + dept.getDeptName());
-			return new FeedBackMessage(mddeptMapper.insert(dept) > 1);
+			return new FeedBackMessage(mddeptMapper.insert(dept) > 0);
 		}
 		log.debug("update dept name is: " + dept.getDeptName());
-		return new FeedBackMessage(mddeptMapper.updateByPrimaryKey(dept) > 1);
+		return new FeedBackMessage(mddeptMapper.updateByPrimaryKey(dept) > 0);
 	}
 }

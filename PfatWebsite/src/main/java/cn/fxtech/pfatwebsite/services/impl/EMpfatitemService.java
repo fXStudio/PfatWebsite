@@ -97,7 +97,10 @@ final class EMpfatitemService implements IEMpfatitemService {
 	 * 查询部门的考核项目
 	 */
 	@Override
-	public List<EMpfatitem> findRecordsByDept(Integer deptId) {
-		return empfatitemMapper.findRecordsByDept(deptId);
+	public List<EMpfatitem> findRecordsByDept(Integer deptId, String status) {
+		log.debug("Search pfatitems by dept id: " + deptId);
+		log.debug("Search pfatitems by dept status: " + status);
+		
+		return empfatitemMapper.findRecords(deptId, status);
 	}
 }

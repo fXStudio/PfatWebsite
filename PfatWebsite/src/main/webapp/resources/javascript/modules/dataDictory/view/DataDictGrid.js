@@ -41,6 +41,8 @@ Ext.define('DataDictModule.view.DataDictGrid', {
                    {
 	                    text: '修改',
 	                    width: 90,
+	                    id: 'updatebtn',
+	                    disabled: true,
 	                    iconCls: 'update',
 	                    action: 'modify'
                 }]

@@ -66,18 +66,10 @@ Ext.define('MDStatusModule.controller.MDStatusController', {
 	                            params: { id: sm.getLastSelected().get('id') },
 	                            method: 'POST',
 	                            success: function(response, options) {
-	                                // 生成回馈对象
-	                                var obj = Ext.decode(response.responseText);
-
-	                                // 根据不同的删除状态，做不同的提示
-	                                if (obj.success) {
-	                                    gridObj.getStore().reload();
-	                                } else {
-	                                    Ext.MessageBox.alert('失败', '删除失败, 原因：' + obj.failureReason);
-	                                }
+                                    gridObj.getStore().reload();
 	                            },
-	                            failure: function(response, options) {
-	                                Ext.MessageBox.alert('失败', '请求超时或网络故障, 错误编号：' + response.status);
+	                            failure: function(response, action) {
+	                                Ext.MessageBox.alert('失败', '操作失败：' + action.result.failureReason);
 	                            }
 	                        });
 	                    }
@@ -99,7 +91,6 @@ Ext.define('MDStatusModule.controller.MDStatusController', {
 	                        url: 'services/statusModify', // 请求的url地址  
 	                        method: 'POST', // 请求方式  
 	                        success: function(form, action) { // 添加数据成功后，重新加载数据源刷新表单 
-	                        	gridPanel.getStore().loadRawData();
 	                        	gridPanel.getStore().load();
 	                        },
 	                        failure: function(form, action) { // 添加失败后，提示用户添加异常
