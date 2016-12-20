@@ -99,5 +99,11 @@ Ext.define('DeptPfatItemModule.controller.PfatfileController', {
 		Ext.each([this.getNormalGrid(), this.getExtraGrid()], function(item, index){
 			item.getStore().load({params: {pfatitemId: record ? record.data.id : 0, cate: index}});
 		});
+		if(record){
+			Ext.getCmp('extra_pfatItemId').setValue(record.data.id);
+			Ext.getCmp('normal_pfatItemId').setValue(record.data.id);
+		}
+		Ext.getComp('normal_upload').setDisabled(record);
+		Ext.getComp('extra_upload').setDisabled(record);
 	}
 });

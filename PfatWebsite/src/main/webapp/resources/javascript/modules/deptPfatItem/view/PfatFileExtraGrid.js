@@ -82,6 +82,8 @@ Ext.define('DeptPfatItemModule.view.PfatFileExtraGrid', {
                     style: 'border:none',
                     items: [{
                         text: '上传文件',
+                        disabled: true,
+                        id: 'extra_upload',
                         handler: function(){
                             var form = Ext.getCmp('extraGrid').getForm();
                             if(form.isValid()){
@@ -108,7 +110,7 @@ Ext.define('DeptPfatItemModule.view.PfatFileExtraGrid', {
                         handler: function() {
                             Ext.getCmp('extraGrid').getForm().reset();
                         }
-                    }, '->',  '<span class="warn_msg" style="color:red">* 注意: 文件名称应能够清晰表达目的, 这里文档用户考核加分</span>']
+                    }, '->',  '<span class="warn_msg" style="color:red">* 注意: 文件名称应能够清晰表达目的, 文档用于考核加分</span>']
             	}]
             }
         });

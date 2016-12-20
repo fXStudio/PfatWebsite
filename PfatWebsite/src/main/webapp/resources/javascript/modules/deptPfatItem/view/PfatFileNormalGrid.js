@@ -82,6 +82,8 @@ Ext.define('DeptPfatItemModule.view.PfatFileNormalGrid', {
                     style: 'border:none',
                     items: [{
                         text: '上传文件',
+                        disabled: true,
+                        id: 'normal_upload',
                         handler: function(){
                             var form = Ext.getCmp('normalGrid').getForm();
                             if(form.isValid()){
@@ -108,7 +110,7 @@ Ext.define('DeptPfatItemModule.view.PfatFileNormalGrid', {
                         handler: function() {
                             Ext.getCmp('normalGrid').getForm().reset();
                         }
-                    }, '->',  '<span class="warn_msg" style="color:red">* 注意: 文件名称应能够清晰表达目的, 这里文档绩效考核</span>']
+                    }, '->',  '<span class="warn_msg" style="color:red">* 注意: 文件名称应能够清晰表达目的</span>']
             	}]
             }
         });
