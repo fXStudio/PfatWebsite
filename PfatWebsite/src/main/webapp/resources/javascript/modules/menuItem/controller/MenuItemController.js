@@ -67,7 +67,6 @@ Ext.define('MenuItemModule.controller.MenuItemController', {
 	                            params: { sysid: rowId },
 	                            method: 'POST',
 	                            success: function(response, options) {
-	                                // 生成回馈对象
 	                                var obj = Ext.decode(response.responseText);
 
 	                                // 根据不同的删除状态，做不同的提示
@@ -85,13 +84,6 @@ Ext.define('MenuItemModule.controller.MenuItemController', {
 	                });
 	            }
 	        },
-            'menuitemform textfield[name=itemlink]': {// 密码项目的事件处理
-                specialkey: function(field, e){
-                    if (e.getKey() == e.ENTER) {
-                        this.getSubmitBtn().getEl().dom.click();
-                    }
-                }
-            },
 	        'menuitemwindow button[action=submit]': {
 	        	click: function(){
 	        		// form表单对象 

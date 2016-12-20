@@ -4,8 +4,6 @@ Ext.define('DeptPfatItemModule.view.DeptPfatItemGrid', {
 	
     requires: ["Ext.plugins.Paging"],
 	
-    selModel: { checkOnly: true },
-    defaults: { sortable: true },
     columns: [{ 
     	xtype: 'rownumberer',
     	align: 'center',

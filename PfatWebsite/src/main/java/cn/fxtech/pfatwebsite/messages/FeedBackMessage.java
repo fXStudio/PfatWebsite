@@ -19,7 +19,7 @@ public final class FeedBackMessage {
 	 * @param failureReason
 	 */
 	public FeedBackMessage(boolean success) {
-		this(true, null);
+		this(success, null);
 	}
 
 	/**

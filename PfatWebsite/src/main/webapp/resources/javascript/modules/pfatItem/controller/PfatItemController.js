@@ -4,7 +4,6 @@ Ext.define('PfatItemModule.controller.PfatItemController', {
     refs: [
         {ref: 'gridPanel', selector: 'categrid'},
         {ref: 'pfatItemPanel', selector: 'pfatitemgrid'},
-        {ref: 'formPanel', selector: 'pfatitemform'},
         {ref: 'cateid', selector: 'textfield[name=cateid]'}
      ],
      init: function() {

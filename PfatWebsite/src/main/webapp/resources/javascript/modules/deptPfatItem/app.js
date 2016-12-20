@@ -6,7 +6,7 @@
 Ext.application({
     name: 'DeptPfatItemModule',
     appFolder: 'javascript/modules/deptPfatItem',
-    controllers: ['DeptPfatItemController'],// 控制器
+    controllers: ['PfatfileController'],// 控制器
 
     autoCreateViewport: true
 });

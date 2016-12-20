@@ -1,6 +1,5 @@
 package cn.fxtech.pfatwebsite.controllers.em;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +19,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.fxtech.pfatwebsite.messages.FeedBackMessage;
 import cn.fxtech.pfatwebsite.models.EMpfatitem;
-import cn.fxtech.pfatwebsite.protocal.PfatFile;
 import cn.fxtech.pfatwebsite.services.IEMpfatitemService;
 
 /**
@@ -94,26 +91,7 @@ public class EMpfatitemController {
 	@RequestMapping(value = "pfatitemModify")
 	public Object statusModify(EMpfatitem item) {
 		log.debug("Save | Update pfatitem name is: " + item.getItemName());
-		
-		return empfatitemService.addOrUpdate(item);
-	}
-	
-	/**
-	 * 文件上传
-	 *
-	 * @param sn
-	 * @return
-	 */
-	@RequestMapping(value = "pfatItemFileUpload")
-	public Object pfatItemFileUpload(PfatFile file) {
-		log.debug("File Upload name: " + file.getFileName());
-		log.debug("File Upload obj: " + file.getPfatFile());
 
-        try {
-			FileUtils.copyInputStreamToFile(file.getPfatFile().getInputStream(), new File("d:/mes/", file.getPfatFile().getOriginalFilename()));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}  
-		return new FeedBackMessage(true);
+		return empfatitemService.addOrUpdate(item);
 	}
 }
