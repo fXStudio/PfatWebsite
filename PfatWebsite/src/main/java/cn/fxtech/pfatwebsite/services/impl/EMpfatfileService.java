@@ -1,10 +1,7 @@
 package cn.fxtech.pfatwebsite.services.impl;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -77,17 +74,14 @@ final class EMpfatfileService implements IEMpfatfileService {
 	}
 
 	@Override
-	public void writeFileToClient(Integer id, HttpServletResponse response) {
-		EMpfatfile pfatfile = empfatfileMapper.findRecordById(id);
-		response.setHeader("Content-Disposition", "attachment;fileName=" + pfatfile.getFileName());
+	public EMpfatfile findRecordById(Integer id) {
+		EMpfatfile obj = empfatfileMapper.findRecordById(id);
+		obj.setFilePath(
+				SERVER_FILE_DIRECTORY + PATH_SEPARATOR + obj.getFilePath() + PATH_SEPARATOR + obj.getFileName());
+		
+		log.debug("Download file name: " + obj.getFileName());
+		log.debug("Download file server path: " + obj.getFilePath());
 
-		try {
-			FileUtils.copyFile(
-					new File(SERVER_FILE_DIRECTORY + PATH_SEPARATOR
-							+ new File(pfatfile.getFilePath() + PATH_SEPARATOR + pfatfile.getFileName())),
-					response.getOutputStream());
-		} catch (IOException e) {
-			log.error(e.getMessage());
-		}
+		return obj;
 	}
 }

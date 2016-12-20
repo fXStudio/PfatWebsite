@@ -1,11 +1,14 @@
 package cn.fxtech.pfatwebsite.controllers.em;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,7 +74,7 @@ public class EMpfatfileController {
 	@ResponseBody
 	public Object pfatfileUpload(EMpfatfile file, HttpServletResponse response) throws JsonProcessingException {
 		log.debug("User request add pfatfile.");
-		
+
 		return new ObjectMapper().writeValueAsString(empfatfileService.add(file));
 	}
 
@@ -80,14 +83,23 @@ public class EMpfatfileController {
 	 * 
 	 * @param sn
 	 * @return
+	 * @throws IOException
 	 */
 	@RequestMapping(value = "pfatfileDownload", method = RequestMethod.GET)
-	public void pfatfileDownload(Integer id, HttpServletResponse response) {
-		response.setCharacterEncoding("utf-8");
-		response.setContentType("multipart/form-data");
+	public void pfatfileDownload(Integer id, HttpServletResponse response)
+			throws IOException {
+		EMpfatfile pfatfile = empfatfileService.findRecordById(id);
+		
+		String fileName = new String(pfatfile.getFileName().getBytes("gb2312"), "iso8859-1");
 
-		log.debug("User request pfatfile download. id: " + id);
+		response.setContentType("application/force-download");
+		response.setHeader("Content-disposition", "attachment;filename=" + fileName);
 
-		empfatfileService.writeFileToClient(id, response);
+		try {
+			FileUtils.copyFile(new File(pfatfile.getFilePath()), response.getOutputStream());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			response.getOutputStream().write(new byte[0]);
+		}
 	}
 }
