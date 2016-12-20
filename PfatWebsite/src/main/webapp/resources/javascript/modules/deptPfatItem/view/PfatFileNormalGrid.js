@@ -23,6 +23,13 @@ Ext.define('DeptPfatItemModule.view.PfatFileNormalGrid', {
         xtype: 'actioncolumn',
         align: 'center',
         iconCls: 'del'
+    },{
+        text: '',
+        width: 30,
+        menuDisabled: true,
+        xtype: 'actioncolumn',
+        align: 'center',
+        iconCls: 'download'
     }],
     /**
      * Component Init

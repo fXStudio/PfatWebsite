@@ -21,6 +21,16 @@
     <mvc:annotation-driven />
     <!-- 开启缓存控制 -->
     <cache:annotation-driven />
+    
+    <!-- 加载properties配置文件 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config.properties</value>
+			</list>
+		</property>
+	</bean>
 
     <!-- 静态资源的访问路径 -->
     <mvc:resources mapping="/javascript/**" location="/resources/javascript/" />

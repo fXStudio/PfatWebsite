@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.fxtech.pfatwebsite.messages.FeedBackMessage;
 import cn.fxtech.pfatwebsite.models.EMpfatitem;
+import cn.fxtech.pfatwebsite.models.OSuser;
 import cn.fxtech.pfatwebsite.services.IEMpfatitemService;
 
 /**
@@ -53,6 +54,30 @@ public class EMpfatitemController {
 
 		log.debug("Auto sync: " + item.getDeptId());
 		log.debug("Total pfatitem count is: " + list.size());
+
+		return map;
+	}
+	
+	/**
+	 * 考核项目列表
+	 *
+	 * @param limit
+	 *            单页数据量
+	 * @param start
+	 *            数据页码
+	 * @return
+	 */
+	@RequestMapping(value = "deptitemList")
+	public Object deptitemList(HttpServletRequest request) {
+		OSuser user = (OSuser)request.getSession().getAttribute("pfatUser");
+		
+		List<EMpfatitem> list = empfatitemService.findRecordsByDept(user.getDeptId());
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("totalCount", list.size());// 记录总数
+		map.put("items", list);// 记录行对象
+
+		log.debug("Total pfatitem of Dept count is: " + list.size());
 
 		return map;
 	}

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,9 +65,25 @@ public class EMpfatfileController {
 	 * @return
 	 */
 	@RequestMapping(value = "pfatfileUpload")
-	public Object EMpfatfile(EMpfatfile file) {
+	public Object pfatfileUpload(EMpfatfile file) {
 		log.debug("User request add pfatfile.");
 
 		return empfatfileService.add(file);
+	}
+
+	/**
+	 * 文件下载
+	 * 
+	 * @param sn
+	 * @return
+	 */
+	@RequestMapping(value = "pfatfileDownload", method = RequestMethod.GET)
+	public void pfatfileDownload(Integer id, HttpServletResponse response) {
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("multipart/form-data");
+		
+		log.debug("User request pfatfile download. id: " + id);
+
+		empfatfileService.writeFileToClient(id, response);
 	}
 }

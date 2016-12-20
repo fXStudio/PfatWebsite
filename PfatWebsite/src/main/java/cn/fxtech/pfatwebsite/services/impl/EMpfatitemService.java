@@ -92,4 +92,12 @@ final class EMpfatitemService implements IEMpfatitemService {
 		}
 		return empfatitemMapper.selectByExample(condition);
 	}
+
+	/**
+	 * 查询部门的考核项目
+	 */
+	@Override
+	public List<EMpfatitem> findRecordsByDept(Integer deptId) {
+		return empfatitemMapper.findRecordsByDept(deptId);
+	}
 }

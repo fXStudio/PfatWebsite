@@ -9,7 +9,14 @@ Ext.define('DeptPfatItemModule.view.DeptPfatItemGrid', {
     	align: 'center',
         header: '序号',
     	width: 50
-	}, {
+	},{
+        text: '',
+        width: 30,
+        menuDisabled: true,
+        xtype: 'actioncolumn',
+        align: 'center',
+        iconCls: 'commit'
+    }, {
         header: '状态',
         width: 120,
         dataIndex: 'status',
@@ -18,11 +25,7 @@ Ext.define('DeptPfatItemModule.view.DeptPfatItemGrid', {
         	switch(val){
         	case 0:
         		return "<span class='pfat-label new-pfatitem'>新建项目</span>";
-        	case 1:
-        		return "<span class='pfat-label commit-review'>申请审核</span>";
-        	case 2:
-        		return "<span class='pfat-label process-pfatitem'>处理中</span>";
-        	case 4:
+        	case 3:
         		return "<span class='pfat-label failure-pfatitem'>审核未通过</span>";
         	}
         }
@@ -66,10 +69,26 @@ Ext.define('DeptPfatItemModule.view.DeptPfatItemGrid', {
     initComponent: function() {
         // Create Store Object
         var store = Ext.create('DeptPfatItemModule.store.PfatItemStore');
+        var me = this;
 
         // Copy properties to Origin Object
         Ext.apply(this, {
-            store: store
+            store: store,
+            bbar: ['->', '查询考核项目',{
+         	        xtype: 'textfield',
+                    name: 'searchField',
+                    selectOnFocus: true,
+                    hideLabel: true,
+                    width: 200
+               }, '|', {
+         	  iconCls: 'x-tbar-loading',
+         	  style: 'margin-right:20px',
+         	  listeners: {
+         		  click: function() {
+         			  store.reload();
+         		  }
+         	  }
+            }]
         });
         // Call Parent Constructor
         this.callParent(arguments);

@@ -7,7 +7,7 @@ Ext.define('DeptPfatItemModule.store.PfatItemStore', {
         type : 'ajax',
         actionMethods: { read: 'POST' },
         api: {
-            read: 'services/pfatitemList'
+            read: 'services/deptitemList'
         },
         reader: {
             type: 'json',

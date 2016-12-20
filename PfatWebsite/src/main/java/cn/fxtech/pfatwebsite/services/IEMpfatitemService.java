@@ -16,4 +16,6 @@ public interface IEMpfatitemService {
 	public FeedBackMessage del(Integer id);
 
 	public List<EMpfatitem> findRecords(EMpfatitem pfatitem);
+
+	public List<EMpfatitem> findRecordsByDept(Integer deptId);
 }

@@ -16,7 +16,7 @@ import cn.fxtech.pfatwebsite.models.EMpfatfile;
  * @author FXStudio.Ajaxfan
  */
 public interface EMpfatfileMapper {
-	@Select("SELECT file_name, concat(pfat_directory(), '/', file_path) file_path FROM em_pfatfile WHERE id = #{id}")
+	@Select("SELECT file_name, file_path FROM em_pfatfile WHERE id = #{id}")
 	@Results({ @Result(property = "fileName", column = "file_name"), @Result(property = "filePath", column = "file_path") })
 	public EMpfatfile findRecordById(Integer id);
 
