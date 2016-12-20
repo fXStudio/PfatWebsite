@@ -21,6 +21,15 @@ div.login-banner{
 	background-position: left top;
 }
 
+div.corpation{
+    position: relative;
+    bottom: 50%;
+    margin-top:110px;
+    color: lightGray;
+    font-weight: bolder;
+	text-align:center;
+}
+
 .login {
     background: URL(../images/login.png) no-repeat 0 0 !important;
 }
