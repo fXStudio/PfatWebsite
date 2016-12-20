@@ -17,6 +17,12 @@
 .download {
     background: url(../images/download.png) no-repeat 0 0 !important;
 }
+.fail {
+    background: url(../images/fail.png) no-repeat 0 0 !important;
+}
+.return {
+    background: url(../images/return.png) no-repeat 0 0 !important;
+}
 .commit {
     background: url(../images/commit.png) no-repeat 0 0 !important;
 }
@@ -45,13 +51,15 @@
 	background-color: #bf9489;
 	color: yellow;
 }
-.process-pfatitem{
+.pass-pfatitem{
 	background-color: #77aa61;
 }
 .failure-pfatitem {
 	background-color: #e13d11;
 }
-
+.verify-pfatitem{
+	background-color: #e9950a;
+}
 .tips {
     color: red;
     font-size: 8pt;

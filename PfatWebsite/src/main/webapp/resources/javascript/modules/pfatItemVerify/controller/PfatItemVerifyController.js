@@ -1,8 +1,8 @@
-Ext.define('DeptPfatItemModule.controller.PfatfileController', {
+Ext.define('PfatItemVerifyModule.controller.PfatItemVerifyController', {
     extend: 'Ext.app.Controller',
     stores: ['PfatItemStore'],// 存储器
     refs: [
-       {ref: 'gridPanel', selector: 'deptpfatitemgrid'},
+       {ref: 'gridPanel', selector: 'pfatitemverifygrid'},
        {ref: 'normalGrid', selector: 'pfatfilenormalgrid'},
        {ref: 'extraGrid', selector: 'pfatfileextragrid'}
     ],
@@ -15,14 +15,16 @@ Ext.define('DeptPfatItemModule.controller.PfatfileController', {
 	    			this.itemClick.call(this, record);
 	    		}
 	    	},
-	    	'actioncolumn[iconCls=del]': {// 添加分类信息
+	    	'actioncolumn[iconCls=commit]': {// 添加分类信息
 	    		click: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
-	                Ext.MessageBox.confirm('确认修改', '确定要删除文件【' + record.get('fileName') + '】吗?', function(res) {
+	                Ext.MessageBox.confirm('审核通过', '项目【' + record.get('itemName') + '】确认审核通过吗?', function(res) {
 	                	if (res === 'yes') {
+	                		record.data.status = 1;
+	                		
 	                		Ext.Ajax.request({
-	                            url: 'services/delPfatfile',
-	                            params: { id: record.get('id') },
+	                            url: 'services/pfatitemModify',
 	                            method: 'POST',
+	                            params: record.data,
 	                            success: function(response, options) {
 	                            	grid.getStore().reload();
 	                            },
@@ -34,11 +36,32 @@ Ext.define('DeptPfatItemModule.controller.PfatfileController', {
         		    });
 	    		 }
 	    	 },
-	    	'actioncolumn[iconCls=commit]': {// 添加分类信息
+	    	'actioncolumn[iconCls=fail]': {// 添加分类信息
 	    		click: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
-	                Ext.MessageBox.confirm('确认提交', '项目【' + record.get('itemName') + '】提交后将无法变更，要继续吗?', function(res) {
+	                Ext.MessageBox.confirm('审核通过', '项目【' + record.get('itemName') + '】确认审核失败吗?', function(res) {
 	                	if (res === 'yes') {
-	                		record.data.status = 1;
+	                		record.data.status = 3;
+	                		
+	                		Ext.Ajax.request({
+	                            url: 'services/pfatitemModify',
+	                            method: 'POST',
+	                            params: record.data,
+	                            success: function(response, options) {
+	                            	grid.getStore().reload();
+	                            },
+	                            failure: function(response, options) {
+	                                Ext.MessageBox.alert('失败', '文件删除失败: 文件不存在或不可编辑');
+	                            }
+	                        });
+	                	}
+        		    });
+	    		 }
+	    	 },
+	    	'actioncolumn[iconCls=return]': {// 添加分类信息
+	    		click: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
+	                Ext.MessageBox.confirm('审核通过', '项目【' + record.get('itemName') + '】确认要退回责任部门吗?', function(res) {
+	                	if (res === 'yes') {
+	                		record.data.status = 0;
 	                		
 	                		Ext.Ajax.request({
 	                            url: 'services/pfatitemModify',
@@ -87,7 +110,7 @@ Ext.define('DeptPfatItemModule.controller.PfatfileController', {
 	    var me = this;
 	    
         // 装载数据
-        store.load({params: {status: "0,3"}});
+        store.load({params: {status: "1"}});
 
 	    // 设置首行选中
         store.on("load", function(){
