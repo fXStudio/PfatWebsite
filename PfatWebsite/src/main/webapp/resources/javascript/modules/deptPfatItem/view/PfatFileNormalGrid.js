@@ -97,8 +97,7 @@ Ext.define('DeptPfatItemModule.view.PfatFileNormalGrid', {
 		                                    	store.reload();
 		                                    },
 		                                    failure: function(form, action) { // 添加失败后，提示用户添加异常
-		                                    	console.log(action.result.failureReason);
-		                                        Ext.Msg.alert('提示', '系统错误，原因：' + action.result.failureReason);
+		                                        Ext.Msg.alert('提示', "上传失败，" + action.result.failureReason);
 		                                    }
 		                                });
             	                	}

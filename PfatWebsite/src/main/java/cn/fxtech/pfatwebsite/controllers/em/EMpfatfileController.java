@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -66,8 +67,9 @@ public class EMpfatfileController {
 	 * @return
 	 * @throws JsonProcessingException
 	 */
-	@RequestMapping(value = "pfatfileUpload")
-	public String pfatfileUpload(EMpfatfile file, HttpServletResponse response) throws JsonProcessingException {
+	@RequestMapping(value = "pfatfileUpload", produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public Object pfatfileUpload(EMpfatfile file, HttpServletResponse response) throws JsonProcessingException {
 		log.debug("User request add pfatfile.");
 		
 		return new ObjectMapper().writeValueAsString(empfatfileService.add(file));

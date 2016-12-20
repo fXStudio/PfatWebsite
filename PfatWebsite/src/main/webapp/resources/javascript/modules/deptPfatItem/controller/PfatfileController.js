@@ -103,7 +103,7 @@ Ext.define('DeptPfatItemModule.controller.PfatfileController', {
 			Ext.getCmp('extra_pfatItemId').setValue(record.data.id);
 			Ext.getCmp('normal_pfatItemId').setValue(record.data.id);
 		}
-		Ext.getComp('normal_upload').setDisabled(record);
-		Ext.getComp('extra_upload').setDisabled(record);
+		Ext.getCmp('normal_upload').setDisabled(!record);
+		Ext.getCmp('extra_upload').setDisabled(!record);
 	}
 });
