@@ -32,7 +32,7 @@ Ext.define('CateManageModule.view.CateManageGrid', {
        align: 'center',
        iconCls: 'add',
        isDisabled: function(view, rowIdx, colIdx, item, record) {
-           return record.data.leaf;
+           return !record.data.depth || record.data.depth === 3;
        }
    }, {
        text: '',
@@ -42,7 +42,7 @@ Ext.define('CateManageModule.view.CateManageGrid', {
        align: 'center',
        iconCls: 'update',
        isDisabled: function(view, rowIdx, colIdx, item, record) {
-           return record.data.id === 0;
+           return record.data.depth === 0;
        }
    }, {
        text: '',
@@ -52,7 +52,7 @@ Ext.define('CateManageModule.view.CateManageGrid', {
        align: 'center',
        iconCls: 'del',
        isDisabled: function(view, rowIdx, colIdx, item, record) {
-           return record.data.id === 0
+           return record.data.depth === 0
        }
    },{
        text: '备注',
@@ -135,9 +135,24 @@ Ext.define('CateManageModule.view.CateManageGrid', {
                },
                listeners: {
             	   nodedragover: function(targetNode, position, dragData){
-            		   var rec = dragData.records[0];
+            		   var res = true;
             		   
-                       return rec.childNodes.length == 0 || (rec.childNodes.length > 0 && targetNode.data.level < 2);
+            		   // 如果目标为叶子节点，并且要移动节点也没有子节点，则可以移动，这个动作视为叶子节点调序
+            		   if((targetNode.data.leaf && !dragData.records[0].childNodes.length)){
+            			   return res;
+            		   }
+            		   // 如果不满足上述情况，则需要判断所移动节点是否会超出3层的限制
+            		   (function(recs, parentDepth){
+            			   var fn = arguments.callee;
+            			   Ext.each(recs, function(rec, index){
+            				  if(parentDepth + 1 > 3) {
+            					  return res = false;
+            				  }
+            				  fn(rec.childNodes, parentDepth + 1);
+            			   });
+            		   })(dragData.records, targetNode.data.depth);
+            		   
+            		   return res;
                    },
             	   beforedrop: function(node, data, overModel, dropPosition, dropHandlers) {
             		    dropHandlers.wait = true;// 挂起拖动事件
@@ -151,27 +166,23 @@ Ext.define('CateManageModule.view.CateManageGrid', {
             	   },
             	   drop: function(node, data, overModel, dropPosition, eOpts){
             		   var mask = new Ext.LoadMask(me, {msg:"数据处理中请稍后......"});
-             		   var rec = data.records[0];
-             		   var level = rec.parentNode.get('level') | 0;
-             		   
-             		   rec.data.level = ++level;
-             		   
        	               mask.show();
              		   Ext.Ajax.request({
 	                         url: 'services/categoryModify',
-	                         params: rec.data,
+	                         params: data.records[0].data,
 	                         method: 'POST',
 	                         success: function(response, options) {
-                             	store.reload();
-                             	store.on({
-                             		'load': function(){
-                        	              mask.hide();
-                             		}
-                             	});
+//                             	store.reload();
+//                             	store.on({
+//                             		'load': function(){
+//                        	              mask.hide();
+//                             		}
+//                             	});
+               	              mask.hide();
 	                         },
 	                         failure: function(response, action) {
 	              	             mask.hide();
-	                             Ext.MessageBox.alert('失败', '操作失败：' + action.result.failureReason);
+	                             Ext.MessageBox.alert('失败', '操作失败：' + (action.result.failureReason || '系统异常'));
 	                         }
 	                   });
                    }

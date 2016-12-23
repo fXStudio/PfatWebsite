@@ -16,7 +16,11 @@ Ext.define('CateManageModule.view.CateManageForm', {
         hidden: true,
         hideLabel: true
     }, {
-        name: 'level',
+        name: 'depth',
+        hidden: true,
+        hideLabel: true
+    }, {
+        name: 'index',
         hidden: true,
         hideLabel: true
     },{
@@ -27,7 +31,6 @@ Ext.define('CateManageModule.view.CateManageForm', {
         id: 'catename',
         fieldLabel: '分类名称',
         name: 'cateName',
-        maxLength: 30,
         selectOnFocus: true,
         allowBlank: false
     }, {

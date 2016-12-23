@@ -38,7 +38,7 @@ final class EMcategoryService implements IEMcategoryService {
 		criteria.andNotEqualTo("id", cate.getId());
 		criteria.andEqualTo("cateName", cate.getCateName());
 
-		if (emcategoryMapper.selectByExample(condition).size() > 0) {
+		if (emcategoryMapper.selectCountByExample(condition) > 0) {
 			log.debug("Category name duplicate: " + cate.getCateName());
 			return new FeedBackMessage(false, "考核分类名称重复");
 		}
@@ -78,7 +78,7 @@ final class EMcategoryService implements IEMcategoryService {
 			// 用DynaBean来做树节点对象(利用Json的灵活性特点，不需要单独声明类)
 			Map<String, Object> map = BeanUtils.createMap(cate);
 
-			boolean isLeaf = cate.getLevel() == LEAF_DEEP;
+			boolean isLeaf = cate.getDepth() == LEAF_DEEP;
 
 			map.put("leaf", isLeaf);
 			map.put("iconCls", isLeaf ? "leaf_node" : "branch_node");

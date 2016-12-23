@@ -1,5 +1,6 @@
 package cn.fxtech.pfatwebsite.models;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,7 +15,17 @@ public class EMcategory {
 	private Integer cateScore;
 	private Integer parentId;
 	private String remark;
-	private Integer level;
+	private Integer depth;
+	@Column(name = "cate_no")
+	private Integer index;
+
+	public Integer getIndex() {
+		return index;
+	}
+
+	public void setIndex(Integer index) {
+		this.index = index;
+	}
 
 	public Integer getId() {
 		return id;
@@ -56,11 +67,11 @@ public class EMcategory {
 		this.remark = remark;
 	}
 
-	public Integer getLevel() {
-		return level;
+	public Integer getDepth() {
+		return depth;
 	}
 
-	public void setLevel(Integer level) {
-		this.level = level;
+	public void setDepth(Integer depth) {
+		this.depth = depth;
 	}
 }

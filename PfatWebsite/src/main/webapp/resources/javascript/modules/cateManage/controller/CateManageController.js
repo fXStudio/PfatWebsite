@@ -18,7 +18,8 @@ Ext.define('CateManageModule.controller.CateManageController', {
  	    				rec.data.cateName = null;
  	    				rec.data.cateScore = null;
  	    				rec.data.remark = null;
- 	    				rec.data.level = ++record.data.level;
+ 	    				rec.data.depth = record.data.depth + 1;
+ 	    				rec.data.index = record.childNodes.length;
 	    				
 		            	var window = this.getWindow();
 		            	
@@ -33,7 +34,7 @@ Ext.define('CateManageModule.controller.CateManageController', {
  	    	 },
  	    	'actioncolumn[iconCls=update]': {// 修改分类信息
 	    		 click: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
-	    			if(record.data.level){
+	    			if(record.data.depth){
 		            	var window = this.getWindow();
 		            	
 		            	// 判断窗体对象是否存在, 如果不存在，就创建一个新的窗体对象
@@ -49,7 +50,7 @@ Ext.define('CateManageModule.controller.CateManageController', {
 	    		 click: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
  	                var gridObj = this.getGridPanel();
  	                
-	    			if(record.data.level){
+	    			if(record.data.depth){
 		                Ext.MessageBox.confirm('确认修改', '删除【' + record.get('cateName') + '】分类将会同时删除其下所有的子类目,确定要执行此操作吗?', function(res) {
 		                	if (res === 'yes') {
 		                		Ext.Ajax.request({

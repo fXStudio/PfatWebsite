@@ -120,7 +120,7 @@ Ext.define('CateManageModule.ex.TreeViewDragDrop', {
      * @cfg {Boolean} appendOnly
      * True if the tree should only allow append drops (use for trees which are sorted).
      */
-    appendOnly: true,
+    appendOnly: false,
 
     /**
      * @cfg {String} ddGroup
