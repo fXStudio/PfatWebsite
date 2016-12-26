@@ -1,6 +1,7 @@
 package cn.fxtech.pfatwebsite.services;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.fxtech.pfatwebsite.messages.FeedBackMessage;
 import cn.fxtech.pfatwebsite.models.EMcategory;
@@ -15,5 +16,5 @@ public interface IEMcategoryService {
 
 	public FeedBackMessage del(Integer id);
 
-	public List getCateTreeModel(Integer parentId);
+	public List<Map<String, Object>> getCateTreeModel(Integer parentId);
 }

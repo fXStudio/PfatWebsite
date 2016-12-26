@@ -137,10 +137,12 @@ Ext.define('CateManageModule.view.CateManageGrid', {
             	   nodedragover: function(targetNode, position, dragData){
             		   var res = true;
             		   
-            		   // 如果目标为叶子节点，并且要移动节点也没有子节点，则可以移动，这个动作视为叶子节点调序
-            		   if((targetNode.data.leaf && !dragData.records[0].childNodes.length)){
-            			   return res;
+            		   // 同级别节点间的移动
+            		   if((targetNode.data.depth === dragData.records[0].data.depth) &&  
+            				("before" === position || "after" === position)) {
+            			   return true;
             		   }
+            		   
             		   // 如果不满足上述情况，则需要判断所移动节点是否会超出3层的限制
             		   (function(recs, parentDepth){
             			   var fn = arguments.callee;
@@ -172,12 +174,12 @@ Ext.define('CateManageModule.view.CateManageGrid', {
 	                         params: data.records[0].data,
 	                         method: 'POST',
 	                         success: function(response, options) {
-//                             	store.reload();
-//                             	store.on({
-//                             		'load': function(){
-//                        	              mask.hide();
-//                             		}
-//                             	});
+                             	store.reload();
+                             	store.on({
+                             		'load': function(){
+                        	              mask.hide();
+                             		}
+                             	});
                	              mask.hide();
 	                         },
 	                         failure: function(response, action) {
