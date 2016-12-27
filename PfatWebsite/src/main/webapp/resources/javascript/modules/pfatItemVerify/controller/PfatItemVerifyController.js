@@ -4,7 +4,9 @@ Ext.define('PfatItemVerifyModule.controller.PfatItemVerifyController', {
     refs: [
        {ref: 'gridPanel', selector: 'pfatitemverifygrid'},
        {ref: 'normalGrid', selector: 'pfatfilenormalgrid'},
-       {ref: 'extraGrid', selector: 'pfatfileextragrid'}
+       {ref: 'extraGrid', selector: 'pfatfileextragrid'},
+       {ref: 'window', selector: 'pfatitemwindow'},
+       {ref: 'formPanel', selector: 'pfatitemform'}
     ],
     
     // Cotroller的业务处理
@@ -20,6 +22,7 @@ Ext.define('PfatItemVerifyModule.controller.PfatItemVerifyController', {
 	                Ext.MessageBox.confirm('审核通过', '项目【' + record.get('itemName') + '】确认审核通过吗?', function(res) {
 	                	if (res === 'yes') {
 	                		record.data.status = 1;
+	                		record.data.postil = null;
 	                		
 	                		Ext.Ajax.request({
 	                            url: 'services/pfatitemModify',
@@ -38,21 +41,21 @@ Ext.define('PfatItemVerifyModule.controller.PfatItemVerifyController', {
 	    	 },
 	    	'actioncolumn[iconCls=fail]': {// 添加分类信息
 	    		click: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
+	            	var me = this;
+	    			
 	                Ext.MessageBox.confirm('审核通过', '项目【' + record.get('itemName') + '】确认审核失败吗?', function(res) {
 	                	if (res === 'yes') {
-	                		record.data.status = 3;
-	                		
-	                		Ext.Ajax.request({
-	                            url: 'services/pfatitemModify',
-	                            method: 'POST',
-	                            params: record.data,
-	                            success: function(response, options) {
-	                            	grid.getStore().reload();
-	                            },
-	                            failure: function(response, options) {
-	                                Ext.MessageBox.alert('失败', '文件删除失败: 文件不存在或不可编辑');
-	                            }
-	                        });
+	    	            	var window = me.getWindow();
+	    	            	// 判断窗体对象是否存在, 如果不存在，就创建一个新的窗体对象
+	    	            	if(!window){window = Ext.create('PfatItemVerifyModule.view.PfatItemWindow');}
+	    	            	
+	    	            	record.data.status = 3;
+	    	            	record.data.postil = null;// 如果重新提交的请求，依旧没有通过，说明信息不应和上次重复
+	    	            	
+	    	            	me.getFormPanel().getForm().loadRecord(record); // 加载要编辑的对象
+	    	                
+	    	                window.show(); // 显示窗体
+	    	                window.center();// 窗体居中显示
 	                	}
         		    });
 	    		 }
@@ -62,6 +65,7 @@ Ext.define('PfatItemVerifyModule.controller.PfatItemVerifyController', {
 	                Ext.MessageBox.confirm('审核通过', '项目【' + record.get('itemName') + '】确认要退回责任部门吗?', function(res) {
 	                	if (res === 'yes') {
 	                		record.data.status = 0;
+	                		record.data.postil = null;
 	                		
 	                		Ext.Ajax.request({
 	                            url: 'services/pfatitemModify',
@@ -78,6 +82,13 @@ Ext.define('PfatItemVerifyModule.controller.PfatItemVerifyController', {
         		    });
 	    		 }
 	    	 },
+            'actioncolumn[iconCls=postil]': {// 添加分类信息
+                click: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
+                	if(record.get('postil')){
+                        Ext.Msg.alert('未通过原因', record.get('postil'));
+                	}
+                 }
+             },
 	    	'actioncolumn[iconCls=download]': {// 添加分类信息
 	    		click: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
                     window.location.href = "services/pfatfileDownload?id=" + record.data.id;
@@ -94,7 +105,41 @@ Ext.define('PfatItemVerifyModule.controller.PfatItemVerifyController', {
 	                	 });
 	                 }
                  }
-	    	 }
+	    	 },
+		        'button[action=submit]': {
+		        	click: function(){
+		                var formObj = this.getFormPanel().getForm();
+		                var window = this.getWindow();
+		                var gridPanel = this.getGridPanel();
+		                
+		                // 检查表单项的录入是否存在问题
+		                if (formObj.isValid()) {
+		                    formObj.submit({
+		                        waitMsg: '数据正在处理请稍后', // 提示信息  
+		                        waitTitle: '提示', // 标题  
+	                            url: 'services/pfatitemModify',
+		                        method: 'POST', // 请求方式  
+		                        success: function(form, action) { // 添加数据成功后，重新加载数据源刷新表单 
+		                        	gridPanel.getStore().reload();
+		                        },
+		                        failure: function(form, action) { // 添加失败后，提示用户添加异常
+		                            Ext.Msg.alert('失败', '操作未完成，原因：录入信息错误');
+		                        }
+		                    });
+		                    setTimeout(function() {window.hide();}, 100);
+		                }
+		        	}
+		        },
+		        'button[action=cancel]': {
+		        	click: function(){
+		        		this.getWindow().hide();
+		        	}
+		        },
+		        'pfatitemwindow': {
+		        	show: function(){
+	    	            Ext.getCmp('postil').focus(true, 100);
+		        	}
+		        }
         })
     },
     

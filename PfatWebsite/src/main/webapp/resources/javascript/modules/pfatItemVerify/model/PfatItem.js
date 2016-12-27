@@ -3,6 +3,7 @@ Ext.define('PfatItemVerifyModule.model.PfatItem', {
     
     fields: [
 	    'id',  'itemName',  'cateId',  'compDate', 'itemScore', 'docName',
-	    'officeName', 'personName', 'telPhone', 'remark', 'status', 'deptId'
+	    'officeName', 'personName', 'telPhone', 'remark', 'status', 'deptId',
+	    'postil'
     ]
 }); 

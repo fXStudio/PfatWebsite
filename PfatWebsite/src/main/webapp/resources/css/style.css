@@ -79,3 +79,11 @@ span.must{color:red;font-size:16pt;}
 #numberfield-1029-inputEl{width: 100px;}
 
 .warn_msg{color:gray;fong-weight:bolder;}
+
+tr.x-grid-row td {
+	border: solid 1px #e8e8e8;
+	padding: 0px;
+	margin: 0px;
+	top: 0px;
+	left: 0px;
+}

@@ -2,8 +2,6 @@ Ext.define('PfatItemVerifyModule.view.PfatItemVerifyGrid', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.pfatitemverifygrid',
 	
-    requires: ["Ext.plugins.Paging"],
-	
     columns: [{ 
     	xtype: 'rownumberer',
     	align: 'center',
@@ -30,6 +28,17 @@ Ext.define('PfatItemVerifyModule.view.PfatItemVerifyGrid', {
         xtype: 'actioncolumn',
         align: 'center',
         iconCls: 'commit'
+    },{
+        text: '',
+        width: 30,
+        menuDisabled: true,
+        xtype: 'actioncolumn',
+        align: 'center',
+        iconCls: 'postil',
+        tooltip: '未通过原因',
+        isDisabled: function(view, rowIndex, colIndex, item, record){
+            return !record.get('postil');
+        }
     }, {
         header: '状态',
         width: 120,
