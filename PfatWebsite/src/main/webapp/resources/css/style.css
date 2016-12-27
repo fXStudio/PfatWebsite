@@ -14,6 +14,9 @@
 .del {
     background-image: url(../images/del.png) !important;
 }
+.preview {
+    background: url(../images/preview.png) no-repeat 0 0 !important;
+}
 .detail {
     background: url(../images/detail.png) no-repeat 0 0 !important;
 }

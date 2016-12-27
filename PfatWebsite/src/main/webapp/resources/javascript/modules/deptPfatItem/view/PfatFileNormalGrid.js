@@ -57,7 +57,7 @@ Ext.define('DeptPfatItemModule.view.PfatFileNormalGrid', {
 	                    flex: 3,
 	                    labelAlign: 'right',
 	                    fieldLabel: '考核文件',
-	                    regex: /.(((doc|xls)x?)|pdf|jpg|png|bmp|gif|avi|mp4|wmv|flv)$/,
+	                    regex: /.(((doc|xls)x?)|pdf|jpg|png|bmp|gif|avi|mp4|wmv|flv)$/i,
 	                    regexText: '文件格式错误，只允许上传word、excel、图片、音视频文件',
 	                    allowBlank: false,
 	                    name: 'fileStream',

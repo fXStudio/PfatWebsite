@@ -1,6 +1,7 @@
 package cn.fxtech.pfatwebsite.services.impl;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.fxtech.pfatwebsite.helper.Office2Swf;
 import cn.fxtech.pfatwebsite.mappers.EMpfatfileMapper;
 import cn.fxtech.pfatwebsite.messages.FeedBackMessage;
 import cn.fxtech.pfatwebsite.models.EMpfatfile;
@@ -32,6 +34,7 @@ final class EMpfatfileService implements IEMpfatfileService {
 	private static final String PATH_SEPARATOR = "/";
 
 	private @Autowired EMpfatfileMapper empfatfileMapper;
+	private @Autowired Office2Swf office2swf;
 
 	@Override
 	@Transactional
@@ -78,10 +81,24 @@ final class EMpfatfileService implements IEMpfatfileService {
 		EMpfatfile obj = empfatfileMapper.findRecordById(id);
 		obj.setFilePath(
 				SERVER_FILE_DIRECTORY + PATH_SEPARATOR + obj.getFilePath() + PATH_SEPARATOR + obj.getFileName());
-		
+
 		log.debug("Download file name: " + obj.getFileName());
 		log.debug("Download file server path: " + obj.getFilePath());
 
 		return obj;
+	}
+
+	/**
+	 * 生成预览图
+	 */
+	@Override
+	public String preview(Integer id) throws IOException {
+		EMpfatfile pfatfile = findRecordById(id);
+
+		String inputFilePath = pfatfile.getFilePath();
+		String outFilePath = inputFilePath.replace(new File(inputFilePath).getName(),
+				System.currentTimeMillis() + ".swf");
+		
+		return office2swf.office2Swf(inputFilePath, outFilePath);
 	}
 }

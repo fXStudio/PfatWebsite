@@ -2,10 +2,12 @@ package cn.fxtech.pfatwebsite.controllers.em;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
@@ -68,6 +70,48 @@ public class EMpfatfileController {
 	 *
 	 * @param sn
 	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "preview")
+	public Object preview(EMpfatfile pfatfile, HttpServletRequest req) throws IOException {
+		log.debug("Request Preview pfatfile. id: " + pfatfile.getId());
+
+		req.getSession(false).setAttribute("outFilePath", empfatfileService.preview(pfatfile.getId()));
+
+		return "{success: true}";
+	}
+
+	/**
+	 *
+	 * @param sn
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping(value = "binary", method = RequestMethod.GET)
+	public void binary(HttpServletRequest req, HttpServletResponse response) throws IOException {
+		String outFilePath = (String) req.getSession().getAttribute("outFilePath");
+
+		log.debug("Binary path: " + outFilePath);
+
+		File file = new File(outFilePath);
+
+		String fileName = new String(file.getName().getBytes("gb2312"), "iso8859-1");
+
+		response.setContentType("application/force-download");
+		response.setHeader("Content-disposition", "attachment;filename=" + fileName);
+
+		try {
+			FileUtils.copyFile(file, response.getOutputStream());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			response.getOutputStream().write(new byte[0]);
+		}
+	}
+
+	/**
+	 *
+	 * @param sn
+	 * @return
 	 * @throws JsonProcessingException
 	 */
 	@RequestMapping(value = "pfatfileUpload", produces = "text/html;charset=UTF-8")
@@ -86,10 +130,9 @@ public class EMpfatfileController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "pfatfileDownload", method = RequestMethod.GET)
-	public void pfatfileDownload(Integer id, HttpServletResponse response)
-			throws IOException {
+	public void pfatfileDownload(Integer id, HttpServletResponse response) throws IOException {
 		EMpfatfile pfatfile = empfatfileService.findRecordById(id);
-		
+
 		String fileName = new String(pfatfile.getFileName().getBytes("gb2312"), "iso8859-1");
 
 		response.setContentType("application/force-download");

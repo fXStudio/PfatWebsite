@@ -22,7 +22,19 @@ Ext.define('PfatItemVerifyModule.view.PfatFileNormalGrid', {
         menuDisabled: true,
         xtype: 'actioncolumn',
         align: 'center',
+        tooltip: '下载',
         iconCls: 'download'
+    },{
+        text: '',
+        width: 30,
+        menuDisabled: true,
+        xtype: 'actioncolumn',
+        align: 'center',
+        tooltip: '预览',
+        iconCls: 'preview',
+        isDisabled: function(view, rowIndex, colIndex, item, record){
+            return !record.get('fileName').match(/\.(doc|docx|xls|xlsx)$/);
+        }
     }],
     /**
      * Component Init

@@ -6,6 +6,7 @@ Ext.define('PfatItemVerifyModule.controller.PfatItemVerifyController', {
        {ref: 'normalGrid', selector: 'pfatfilenormalgrid'},
        {ref: 'extraGrid', selector: 'pfatfileextragrid'},
        {ref: 'window', selector: 'pfatitemwindow'},
+       {ref: 'previewWindow', selector: 'previewwindow'},
        {ref: 'formPanel', selector: 'pfatitemform'}
     ],
     
@@ -94,6 +95,32 @@ Ext.define('PfatItemVerifyModule.controller.PfatItemVerifyController', {
                     window.location.href = "services/pfatfileDownload?id=" + record.data.id;
 	    		 }
 	    	 },
+	    	 'actioncolumn[iconCls=preview]': {// 添加分类信息
+	    		 click: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
+	    			 if(record.get('fileName').match(/\.(doc|docx|xls|xlsx)$/)) {
+	    				 var mask = new Ext.LoadMask(Ext.getBody(), {msg:"数据处理中请稍后......"}); mask.show();
+       	              	 var previewWindow = this.getPreviewWindow();
+	    				 
+	    				 Ext.Ajax.request({
+                            url: 'services/preview',
+                            method: 'POST',
+                            params: record.data,
+                            success: function(response, options) {
+              	              	mask.hide();
+	     						// 判断窗体对象是否存在, 如果不存在，就创建一个新的窗体对象
+	     						if(!previewWindow){previewWindow = Ext.create('PfatItemVerifyModule.view.PreviewWindow');}
+	     						
+	     						previewWindow.show(); // 显示窗体
+	     						previewWindow.center();// 窗体居中显示
+                            },
+                            failure: function(response, options) {
+              	              	mask.hide();
+                                Ext.MessageBox.alert('失败', '预览文件生成失败');
+                            }
+                        });
+	    			 }
+	    		 }
+	    	 },
 	    	 'textfield[name=searchField]': {
 	    		 specialkey: function(field, e){
 	                 if (e.getKey() == e.ENTER) {
@@ -106,40 +133,40 @@ Ext.define('PfatItemVerifyModule.controller.PfatItemVerifyController', {
 	                 }
                  }
 	    	 },
-		        'button[action=submit]': {
-		        	click: function(){
-		                var formObj = this.getFormPanel().getForm();
-		                var window = this.getWindow();
-		                var gridPanel = this.getGridPanel();
-		                
-		                // 检查表单项的录入是否存在问题
-		                if (formObj.isValid()) {
-		                    formObj.submit({
-		                        waitMsg: '数据正在处理请稍后', // 提示信息  
-		                        waitTitle: '提示', // 标题  
-	                            url: 'services/pfatitemModify',
-		                        method: 'POST', // 请求方式  
-		                        success: function(form, action) { // 添加数据成功后，重新加载数据源刷新表单 
-		                        	gridPanel.getStore().reload();
-		                        },
-		                        failure: function(form, action) { // 添加失败后，提示用户添加异常
-		                            Ext.Msg.alert('失败', '操作未完成，原因：录入信息错误');
-		                        }
-		                    });
-		                    setTimeout(function() {window.hide();}, 100);
-		                }
-		        	}
-		        },
-		        'button[action=cancel]': {
-		        	click: function(){
-		        		this.getWindow().hide();
-		        	}
-		        },
-		        'pfatitemwindow': {
-		        	show: function(){
-	    	            Ext.getCmp('postil').focus(true, 100);
-		        	}
-		        }
+	        'pfatitemwindow button[action=submit]': {
+	        	click: function(){
+	                var formObj = this.getFormPanel().getForm();
+	                var window = this.getWindow();
+	                var gridPanel = this.getGridPanel();
+	                
+	                // 检查表单项的录入是否存在问题
+	                if (formObj.isValid()) {
+	                    formObj.submit({
+	                        waitMsg: '数据正在处理请稍后', // 提示信息  
+	                        waitTitle: '提示', // 标题  
+                            url: 'services/pfatitemModify',
+	                        method: 'POST', // 请求方式  
+	                        success: function(form, action) { // 添加数据成功后，重新加载数据源刷新表单 
+	                        	gridPanel.getStore().reload();
+	                        },
+	                        failure: function(form, action) { // 添加失败后，提示用户添加异常
+	                            Ext.Msg.alert('失败', '操作未完成，原因：录入信息错误');
+	                        }
+	                    });
+	                    setTimeout(function() {window.hide();}, 100);
+	                }
+	        	}
+	        },
+	        'pfatitemwindow button[action=cancel]': {
+	        	click: function(){
+	        		this.getWindow().hide();
+	        	}
+	        },
+	        'pfatitemwindow': {
+	        	show: function(){
+    	            Ext.getCmp('postil').focus(true, 100);
+	        	}
+	        }
         })
     },
     

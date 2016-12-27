@@ -33,10 +33,23 @@ public class FreeMarkerController {
 	 * @return
 	 */
 	@RequestMapping(value = "{path}")
-	public String disp(@ModelAttribute("model") ModelMap model, @PathVariable("path") String path, HttpServletRequest request) {
+	public String disp(@ModelAttribute("model") ModelMap model, @PathVariable("path") String path,
+			HttpServletRequest request) {
 		model.addAttribute("modelName", request.getSession().getAttribute("pfatUser") == null ? "exitSystem" : path);
 
 		return "func";
+	}
+
+	/**
+	 * 捕获系统页面的跳转操作
+	 *
+	 * @param request
+	 * @param path
+	 * @return
+	 */
+	@RequestMapping(value = "preview")
+	public String preview(HttpServletRequest request) {
+		return "preview";
 	}
 
 	/**

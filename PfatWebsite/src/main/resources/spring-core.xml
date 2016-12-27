@@ -36,6 +36,7 @@
     <mvc:resources mapping="/javascript/**" location="/resources/javascript/" />
     <mvc:resources mapping="/styles/**" location="/resources/css/" />
     <mvc:resources mapping="/images/**" location="/resources/images/" />
+    <mvc:resources mapping="/fx/**" location="/fx/" />
 
     <!-- freemarker config -->
     <bean id="freemarkerConfig"

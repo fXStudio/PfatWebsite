@@ -1,5 +1,6 @@
 package cn.fxtech.pfatwebsite.services;
 
+import java.io.IOException;
 import java.util.List;
 
 import cn.fxtech.pfatwebsite.messages.FeedBackMessage;
@@ -15,4 +16,5 @@ public interface IEMpfatfileService {
 	public FeedBackMessage del(Integer id);
 	public List<EMpfatfile> findRecords(EMpfatfile file) ;
 	public EMpfatfile findRecordById(Integer id);
+	public String preview(Integer id) throws IOException;
 }
