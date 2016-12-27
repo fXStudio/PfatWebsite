@@ -1,0 +1,81 @@
+.fxstudio-window-innerComponent {
+    background: transparent;
+    padding: 10px;
+}
+
+.fxstudio-window-inner-margin3 {
+    margin-top: 3px
+}
+
+.add {
+    background-image: url(../images/add.png) !important;
+}
+
+.del {
+    background-image: url(../images/del.png) !important;
+}
+.detail {
+    background: url(../images/detail.png) no-repeat 0 0 !important;
+}
+.postil {
+    background: url(../images/postil.png) no-repeat 0 0 !important;
+}
+.excel {
+    background: url(../images/excel.png) no-repeat 0 0 !important;
+}
+.download {
+    background: url(../images/download.png) no-repeat 0 0 !important;
+}
+.fail {
+    background: url(../images/fail.png) no-repeat 0 0 !important;
+}
+.return {
+    background: url(../images/return.png) no-repeat 0 0 !important;
+}
+.commit {
+    background: url(../images/commit.png) no-repeat 0 0 !important;
+}
+.upload {
+    background: url(../images/image_add.png) no-repeat 0 0 !important;
+}
+.update {
+    background-image: url(../images/update.png) !important;
+}
+.search {
+    background-image: url(../images/search.png) !important;
+}
+.feed-icon {
+    background-image: url(../images/feed-icon.png) !important;
+}
+
+.pfat-label{
+	padding:3px 8px;
+	border: solid 1px white;
+	color:white;
+}
+.commit-review {
+	background-color: #64788f;
+}
+.new-pfatitem{
+	background-color: #bf9489;
+	color: yellow;
+}
+.pass-pfatitem{
+	background-color: #77aa61;
+}
+.failure-pfatitem {
+	background-color: #e13d11;
+}
+.verify-pfatitem{
+	background-color: #e9950a;
+}
+.tips {
+    color: red;
+    font-size: 8pt;
+    font-style: italic;
+}
+span.must{color:red;font-size:16pt;}
+
+#numberfield-1029-inputEl{width: 100px;}
+
+.warn_msg{color:gray;fong-weight:bolder;}

@@ -48,7 +48,7 @@ final class EMcategoryService implements IEMcategoryService {
 			return new FeedBackMessage(emcategoryMapper.insert(cate) > 0);
 		}
 		log.debug("Update Category name is: " + cate.getCateName());
-		return updateCate(cate);
+		return new FeedBackMessage(emcategoryMapper.updateByPrimaryKey(cate) > 0);
 	}
 
 	/**
@@ -93,55 +93,18 @@ final class EMcategoryService implements IEMcategoryService {
 	}
 
 	/**
-	 * 修改分类信息
-	 * 
-	 * @param cate
-	 * @return
+	 * 调整分类树结构
 	 */
-	private FeedBackMessage updateCate(EMcategory cate) {
+	@Override
+	public Object adjustCateTree(List<EMcategory> list) {
 		try {
-			emcategoryMapper.updateByPrimaryKey(cate);
-			
-			// 修改同级
-			updateSibling(cate);
-			// 修改子对象
-			updateSubCate(cate);
+			for (EMcategory em : list) {
+				emcategoryMapper.updateByPrimaryKey(em);
+			}
 		} catch (Exception e) {
 			log.error(e.getMessage());
-			return new FeedBackMessage(false, "系统错误，请联系管理员");
+			return new FeedBackMessage(false, "系统异常，请联系管理员");
 		}
 		return new FeedBackMessage(true);
-	}
-
-	/**
-	 * 修改同级
-	 * 
-	 * @param cate
-	 */
-	private void updateSibling(EMcategory cate) {
-		int index = 0;
-
-		for (EMcategory obj : emcategoryMapper.findByParentId(cate.getParentId())) {
-			if (obj.getIndex() == cate.getIndex() && obj.getId() != cate.getId()) {
-				index++;
-			} else if(obj.getId() != cate.getId()){
-				continue;
-			}
-			obj.setIndex(index++);
-			emcategoryMapper.updateByPrimaryKey(obj);
-		}
-	}
-
-	/**
-	 * 修改子分类
-	 * 
-	 * @param cate
-	 */
-	private void updateSubCate(EMcategory cate) {
-		for (EMcategory obj : emcategoryMapper.findByParentId(cate.getId())) {
-			obj.setDepth(cate.getDepth() + 1);
-			updateCate(obj);
-			emcategoryMapper.updateByPrimaryKey(obj);
-		}
 	}
 }

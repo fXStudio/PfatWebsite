@@ -19,7 +19,7 @@
         <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="javascript/extjs/resources/css/ext-all-neptune.css" />
         <link rel="stylesheet" href="javascript/extjs/ux/css/ItemSelector.css" />
-        <link rel="stylesheet" href="styles/freeway.css" />
+        <link rel="stylesheet" href="styles/style.css" />
     </head>
 
     <body>

@@ -135,26 +135,22 @@ Ext.define('CateManageModule.view.CateManageGrid', {
                },
                listeners: {
             	   nodedragover: function(targetNode, position, dragData){
-            		   var res = true;
-            		   
-            		   // 同级别节点间的移动
-            		   if((targetNode.data.depth === dragData.records[0].data.depth) &&  
-            				("before" === position || "after" === position)) {
-            			   return true;
+            		   var targetDepth = targetNode.data.depth, res = true;
+            		   if("append" === position) {// 如果是添加操作，则深度需要加1
+            			   targetDepth++;
             		   }
             		   
-            		   // 如果不满足上述情况，则需要判断所移动节点是否会超出3层的限制
-            		   (function(recs, parentDepth){
+					  (function(recs, depth){
             			   var fn = arguments.callee;
             			   Ext.each(recs, function(rec, index){
-            				  if(parentDepth + 1 > 3) {
+            				  if(depth > 3) {// 数据的转移最多只能达到三层
             					  return res = false;
             				  }
-            				  fn(rec.childNodes, parentDepth + 1);
+            				  fn(rec.childNodes, depth + 1);
             			   });
-            		   })(dragData.records, targetNode.data.depth);
-            		   
-            		   return res;
+            		   })(dragData.records, targetDepth);
+					  
+					  return res;
                    },
             	   beforedrop: function(node, data, overModel, dropPosition, dropHandlers) {
             		    dropHandlers.wait = true;// 挂起拖动事件
@@ -167,20 +163,25 @@ Ext.define('CateManageModule.view.CateManageGrid', {
             		    });
             	   },
             	   drop: function(node, data, overModel, dropPosition, eOpts){
-            		   var mask = new Ext.LoadMask(me, {msg:"数据处理中请稍后......"});
+            		   var mask = new Ext.LoadMask(me, {msg:"数据处理中请稍后......"}), arr = [];
        	               mask.show();
+            		   
+            		   Ext.each(store.getUpdatedRecords(), function(rec, index){
+            			   arr.push(rec.data);
+            		   });
+            		   
              		   Ext.Ajax.request({
-	                         url: 'services/categoryModify',
-	                         params: data.records[0].data,
+	                         url: 'services/categoryAdjust',
+	                         params: {cates: JSON.stringify(arr)},
 	                         method: 'POST',
 	                         success: function(response, options) {
                              	store.reload();
                              	store.on({
                              		'load': function(){
-                        	              mask.hide();
+	                         			  me.view.refresh();
+	                    	              mask.hide();
                              		}
                              	});
-               	              mask.hide();
 	                         },
 	                         failure: function(response, action) {
 	              	             mask.hide();

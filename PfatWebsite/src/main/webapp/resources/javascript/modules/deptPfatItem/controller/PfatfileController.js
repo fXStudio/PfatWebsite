@@ -60,6 +60,13 @@ Ext.define('DeptPfatItemModule.controller.PfatfileController', {
                     window.location.href = "services/pfatfileDownload?id=" + record.data.id;
 	    		 }
 	    	 },
+            'actioncolumn[iconCls=postil]': {// 添加分类信息
+                click: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
+                	if(record.get('postil')){
+                        Ext.Msg.alert('未通过原因', record.get('postil'));
+                	}
+                 }
+             },
 	    	 'textfield[name=searchField]': {
 	    		 specialkey: function(field, e){
 	                 if (e.getKey() == e.ENTER) {

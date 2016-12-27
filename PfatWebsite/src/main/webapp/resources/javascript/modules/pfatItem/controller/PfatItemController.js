@@ -10,7 +10,7 @@ Ext.define('PfatItemModule.controller.PfatItemController', {
  	    this.control({
 	    	'categrid': {
 	    		itemclick: function(view, record, item, index, e, eOpts){
-	    			var isdisabled = record.data.level < 3;
+	    			var isdisabled = !record.data.leaf;
 	    			
 	    			Ext.each(['addBtn'], function(id){
 	    				Ext.getCmp(id).setDisabled(isdisabled);

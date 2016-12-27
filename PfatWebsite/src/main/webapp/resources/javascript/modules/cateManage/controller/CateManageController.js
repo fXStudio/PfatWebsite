@@ -102,7 +102,7 @@ Ext.define('CateManageModule.controller.CateManageController', {
 	                        url: 'services/categoryModify', // 请求的url地址  
 	                        method: 'POST', // 请求方式  
 	                        success: function(form, action) { // 添加数据成功后，重新加载数据源刷新表单 
-	                        	gridPanel.getStore().load();
+	                        	gridPanel.getStore().reload();
 	                        },
 	                        failure: function(form, action) { // 添加失败后，提示用户添加异常
 	                            Ext.Msg.alert('失败', '操作未完成，原因：' + action.result.failureReason);

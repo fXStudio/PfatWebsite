@@ -17,4 +17,6 @@ public interface IEMcategoryService {
 	public FeedBackMessage del(Integer id);
 
 	public List<Map<String, Object>> getCateTreeModel(Integer parentId);
+
+	public Object adjustCateTree(List<EMcategory> list);
 }

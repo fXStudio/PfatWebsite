@@ -2,38 +2,62 @@ package cn.fxtech.pfatwebsite.models;
 
 import java.sql.Date;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Table(name = "em_pfatitem")
-public class EMpfatitem {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+/**
+ * 数据统计
+ * 
+ * @author Administrator
+ */
+@Table(name = "pfat_statis_view")
+public class STpfatdata {
 	private Integer id;
+	private String firstCate;
+	private String secondCate;
+	private String thirdCate;
 	private String itemName;
-	private Integer cateId;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date compDate;
 	private Integer itemScore;
 	private String docName;
-	private Integer deptId;
+	private String deptName;
 	private String officeName;
-	private String personName;
 	private String telPhone;
-	private String remark;
+	private String personName;
 	private Integer status;
-	private String postil;
 
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
-		this.id = id == null ? 0 : id;
+		this.id = id;
+	}
+
+	public String getFirstCate() {
+		return firstCate;
+	}
+
+	public void setFirstCate(String firstCate) {
+		this.firstCate = firstCate;
+	}
+
+	public String getSecondCate() {
+		return secondCate;
+	}
+
+	public void setSecondCate(String secondCate) {
+		this.secondCate = secondCate;
+	}
+
+	public String getThirdCate() {
+		return thirdCate;
+	}
+
+	public void setThirdCate(String thirdCate) {
+		this.thirdCate = thirdCate;
 	}
 
 	public String getItemName() {
@@ -42,14 +66,6 @@ public class EMpfatitem {
 
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
-	}
-
-	public Integer getCateId() {
-		return cateId;
-	}
-
-	public void setCateId(Integer cateId) {
-		this.cateId = cateId;
 	}
 
 	public Date getCompDate() {
@@ -76,12 +92,12 @@ public class EMpfatitem {
 		this.docName = docName;
 	}
 
-	public Integer getDeptId() {
-		return deptId;
+	public String getDeptName() {
+		return deptName;
 	}
 
-	public void setDeptId(Integer deptId) {
-		this.deptId = deptId;
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 
 	public String getOfficeName() {
@@ -108,27 +124,11 @@ public class EMpfatitem {
 		this.telPhone = telPhone;
 	}
 
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
 	public Integer getStatus() {
 		return status;
 	}
 
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-
-	public String getPostil() {
-		return postil;
-	}
-
-	public void setPostil(String postil) {
-		this.postil = postil;
 	}
 }
