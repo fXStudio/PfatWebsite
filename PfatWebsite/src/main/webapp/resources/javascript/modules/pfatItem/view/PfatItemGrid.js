@@ -55,6 +55,38 @@ Ext.define('PfatItemModule.view.PfatItemGrid', {
         Ext.apply(this, {
         	store: store,
             plugins: [rowEditing],
+            viewConfig: {
+                plugins: {
+                    ptype: 'gridviewdragdrop'
+                },
+                listeners: {
+             	   drop: function(node, data, overModel, dropPosition, eOpts){
+             		   var mask = new Ext.LoadMask(me, {msg:"数据处理中请稍后......"}), arr = [];
+        	               mask.show();
+             		   
+             		   store.each(function(rec){ rec.data.index = arr.length; arr.push(rec.data); });
+             		   
+              		   Ext.Ajax.request({
+ 	                         url: 'services/pfatitemAdjust',
+ 	                         params: {items: JSON.stringify(arr)},
+ 	                         method: 'POST',
+ 	                         success: function(response, options) {
+                              	store.reload();
+                              	store.on({
+                              		'load': function(){
+ 	                         			  me.view.refresh();
+ 	                    	              mask.hide();
+                              		}
+                              	});
+ 	                         },
+ 	                         failure: function(response, action) {
+ 	              	             mask.hide();
+ 	                             Ext.MessageBox.alert('失败', '操作失败：' + (action.result.failureReason || '系统异常'));
+ 	                         }
+ 	                   });
+                    }
+                }
+            },
             columns: [{
                 xtype: 'actioncolumn',
                 width: '12',
@@ -124,7 +156,6 @@ Ext.define('PfatItemModule.view.PfatItemGrid', {
                     allowBlank: false,
                     format: 'Y-m-d',
                     submitFormat: 'Y-m-d',
-                    minValue: new Date(),
                     editable: false
 
                 }
@@ -189,7 +220,9 @@ Ext.define('PfatItemModule.view.PfatItemGrid', {
                     width:120,
                     disabled: true,
                     handler: function() {
-                        store.insert(0, new PfatItemModule.model.PfatItem());
+                    	var item = new PfatItemModule.model.PfatItem(); item.data.index = store.getCount();
+                    	
+                        store.insert(0, item);
                         rowEditing.startEdit(0, 0);
                         this.setDisabled(true);
                     }

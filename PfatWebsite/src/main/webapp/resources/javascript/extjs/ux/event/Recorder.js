@@ -473,7 +473,6 @@ Ext.define('Ext.ux.event.Recorder', function (Recorder) {
                 }
 
                 if (scrolled) {
-                    //console.log('scroll x:' + x + ' y:' + y, p);
                     me.eventsRecorded.push(rec = {
                         type: 'scroll',
                         target: me.getElementXPath(p),

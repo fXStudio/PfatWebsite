@@ -18,4 +18,6 @@ public interface IEMpfatitemService {
 	public List<EMpfatitem> findRecords(EMpfatitem pfatitem);
 
 	public List<EMpfatitem> findRecordsByDept(Integer deptId, String status);
+
+	public Object adjustPfatitem(List<EMpfatitem> list);
 }

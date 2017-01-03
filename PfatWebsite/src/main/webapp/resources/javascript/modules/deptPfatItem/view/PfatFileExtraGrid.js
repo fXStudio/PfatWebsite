@@ -100,7 +100,6 @@ Ext.define('DeptPfatItemModule.view.PfatFileExtraGrid', {
 		                                    	store.reload();
 		                                    },
 		                                    failure: function(form, action) { // 添加失败后，提示用户添加异常
-		                                    	console.log(action.result.failureReason);
 		                                        Ext.Msg.alert('提示', '系统错误，原因：' + action.result.failureReason);
 		                                    }
 		                                });

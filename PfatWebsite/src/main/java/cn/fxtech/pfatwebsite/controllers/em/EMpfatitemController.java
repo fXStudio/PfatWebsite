@@ -1,12 +1,20 @@
 package cn.fxtech.pfatwebsite.controllers.em;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +41,7 @@ import cn.fxtech.pfatwebsite.services.IEMpfatitemService;
 public class EMpfatitemController {
 	/** 日志工具 */
 	private Logger log = Logger.getLogger(EMpfatitemController.class);
+	private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 	private @Autowired IEMpfatitemService empfatitemService;
 
@@ -58,7 +67,7 @@ public class EMpfatitemController {
 
 		return map;
 	}
-	
+
 	/**
 	 * 考核项目列表
 	 *
@@ -69,9 +78,9 @@ public class EMpfatitemController {
 	 * @return
 	 */
 	@RequestMapping(value = "deptitemList")
-	public Object deptitemList(HttpServletRequest request, @RequestParam(value="status") String status) {
-		OSuser user = (OSuser)request.getSession().getAttribute("pfatUser");
-		
+	public Object deptitemList(HttpServletRequest request, @RequestParam(value = "status") String status) {
+		OSuser user = (OSuser) request.getSession().getAttribute("pfatUser");
+
 		List<EMpfatitem> list = empfatitemService.findRecordsByDept(user.getDeptId(), status);
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -119,5 +128,38 @@ public class EMpfatitemController {
 		log.debug("Save | Update pfatitem name is: " + item.getItemName());
 
 		return empfatitemService.addOrUpdate(item);
+	}
+
+	/**
+	 * 排序考核项目
+	 *
+	 * @param sn
+	 * @return
+	 * @throws IOException
+	 * @throws JsonMappingException
+	 * @throws JsonParseException
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 * @throws ParseException
+	 */
+	@RequestMapping(value = "pfatitemAdjust")
+	public Object pfatitemAdjust(HttpServletRequest request) throws JsonParseException, JsonMappingException,
+			IOException, IllegalAccessException, InvocationTargetException, ParseException {
+		List<EMpfatitem> list = new ArrayList<EMpfatitem>();
+
+		for (LinkedHashMap map : (List<LinkedHashMap>) new ObjectMapper().readValue(request.getParameter("items"),
+				List.class)) {
+			EMpfatitem em = new EMpfatitem();
+			for (Field field : em.getClass().getDeclaredFields()) {
+				if ("compDate".equals(field.getName())) {
+					BeanUtils.setProperty(em, field.getName(), df.parse((String) map.get(field.getName())));
+				} else {
+					BeanUtils.setProperty(em, field.getName(), map.get(field.getName()));
+				}
+			}
+			list.add(em);
+		}
+
+		return empfatitemService.adjustPfatitem(list);
 	}
 }

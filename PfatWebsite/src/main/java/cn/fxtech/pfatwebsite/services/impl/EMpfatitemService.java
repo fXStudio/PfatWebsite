@@ -78,6 +78,7 @@ final class EMpfatitemService implements IEMpfatitemService {
 	@Override
 	public List<EMpfatitem> findRecords(EMpfatitem pfatitem) {
 		Example condition = new Example(EMpfatitem.class);
+		condition.setOrderByClause("itemNo");
 		Criteria criteria = condition.createCriteria();
 
 		if (pfatitem.getCateId() != null) {// 按分类搜索
@@ -100,7 +101,23 @@ final class EMpfatitemService implements IEMpfatitemService {
 	public List<EMpfatitem> findRecordsByDept(Integer deptId, String status) {
 		log.debug("Search pfatitems by dept id: " + deptId);
 		log.debug("Search pfatitems by dept status: " + status);
-		
+
 		return empfatitemMapper.findRecords(deptId, status);
+	}
+
+	/**
+	 * 调整考核项目的顺序
+	 */
+	@Override
+	public Object adjustPfatitem(List<EMpfatitem> list) {
+		try {
+			for (EMpfatitem em : list) {
+				empfatitemMapper.updateByPrimaryKey(em);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return new FeedBackMessage(false, "系统异常，请联系管理员");
+		}
+		return new FeedBackMessage(true);
 	}
 }

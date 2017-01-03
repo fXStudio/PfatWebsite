@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -27,6 +28,9 @@ public class EMpfatitem {
 	private String remark;
 	private Integer status;
 	private String postil;
+	@Transient
+	private Integer index;
+	private Integer itemNo;
 
 	public Integer getId() {
 		return id;
@@ -130,5 +134,21 @@ public class EMpfatitem {
 
 	public void setItemScore(Float itemScore) {
 		this.itemScore = itemScore;
+	}
+
+	public Integer getIndex() {
+		return index;
+	}
+
+	public void setIndex(Integer index) {
+		this.itemNo = index;
+	}
+
+	public Integer getItemNo() {
+		return itemNo;
+	}
+
+	public void setItemNo(Integer itemNo) {
+		this.index = itemNo;
 	}
 }
