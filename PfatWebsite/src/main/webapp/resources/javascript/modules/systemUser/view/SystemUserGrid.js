@@ -51,7 +51,22 @@ Ext.define('SystemUserModule.view.SystemUserGrid', {
                     iconCls: 'del',
                     action: 'del'
                 }]
-            })
+            }),
+            bbar: ['->', '查询用户',{
+                    xtype: 'textfield',
+                    name: 'searchField',
+                    selectOnFocus: true,
+                    hideLabel: true,
+                    width: 200
+               }, '|', {
+              iconCls: 'x-tbar-loading',
+              style: 'margin-right:20px',
+              listeners: {
+                  click: function() {
+                      store.reload();
+                  }
+              }
+            }]
         });
         // Call Parent Constructor
         this.callParent(arguments);

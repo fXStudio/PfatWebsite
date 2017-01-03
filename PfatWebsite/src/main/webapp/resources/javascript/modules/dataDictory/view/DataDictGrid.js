@@ -47,7 +47,22 @@ Ext.define('DataDictModule.view.DataDictGrid', {
 	                    iconCls: 'update',
 	                    action: 'modify'
                 }]
-            })
+            }),
+            bbar: ['->', '查询字典项',{
+	                xtype: 'textfield',
+	                name: 'searchField',
+	                selectOnFocus: true,
+	                hideLabel: true,
+	                width: 200
+	           }, '|', {
+	          iconCls: 'x-tbar-loading',
+	          style: 'margin-right:20px',
+	          listeners: {
+	              click: function() {
+	                  store.reload();
+	              }
+	          }
+	        }]
         });
         // Call Parent Constructor
         this.callParent(arguments);

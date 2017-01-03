@@ -46,7 +46,22 @@ Ext.define('MenuModule.view.MenuGrid', {
                     iconCls: 'del',
                     action: 'del'
                 }]
-            })
+            }),
+            bbar: ['->', '查询菜单',{
+	                xtype: 'textfield',
+	                name: 'searchField',
+	                selectOnFocus: true,
+	                hideLabel: true,
+	                width: 200
+	           }, '|', {
+	          iconCls: 'x-tbar-loading',
+	          style: 'margin-right:20px',
+	          listeners: {
+	              click: function() {
+	                  store.reload();
+	              }
+	          }
+	        }]
         });
         // Call Parent Constructor
         this.callParent(arguments);

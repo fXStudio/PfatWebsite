@@ -12,6 +12,19 @@ Ext.define('SystemUserModule.controller.SystemUserController', {
     // Cotroller的业务处理
     init: function() {
 	    this.control({
+            'textfield[name=searchField]': {
+                specialkey: function(field, e){
+                    if (e.getKey() == e.ENTER) {
+                        var gridPanel = this.getGridPanel();
+                        gridPanel.getStore().filter({
+                            filterFn: function(item) {
+                                return !field.getValue() || 
+                                       item.get("username") && item.get("username").indexOf(field.getValue()) > -1; 
+                            }
+                        });
+                    }
+                }
+            },
 	    	'textfield[name=password]':{
 	    		keyup: function(field){
 	    			Ext.getCmp('hidepass').setValue(hex_md5(field.getValue()));

@@ -9,7 +9,19 @@ Ext.define('DataDictModule.controller.DataDictController', {
     
     // Cotroller的业务处理
     init: function() {
-	    this.control({
+	    this.control({ 'textfield[name=searchField]': {
+	            specialkey: function(field, e){
+	                if (e.getKey() == e.ENTER) {
+	                    var gridPanel = this.getGridPanel();
+	                    gridPanel.getStore().filter({
+	                        filterFn: function(item) {
+	                            return !field.getValue() || 
+	                                   item.get("itemName") && item.get("itemName").indexOf(field.getValue()) > -1; 
+	                        }
+	                    });
+	                }
+	            }
+	        },
             'textfield[name=itemVal]': {
                 specialkey: function(field, e){
                     if (e.getKey() == e.ENTER) {

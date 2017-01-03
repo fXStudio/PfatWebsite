@@ -9,7 +9,19 @@ Ext.define('MenuModule.controller.MenuController', {
     
     // Cotroller的业务处理
     init: function() {
-	    this.control({
+	    this.control({'textfield[name=searchField]': {
+	            specialkey: function(field, e){
+	                if (e.getKey() == e.ENTER) {
+	                    var gridPanel = this.getGridPanel();
+	                    gridPanel.getStore().filter({
+	                        filterFn: function(item) {
+	                            return !field.getValue() || 
+	                                   item.get("menuName") && item.get("menuName").indexOf(field.getValue()) > -1; 
+	                        }
+	                    });
+	                }
+	            }
+	        },
 	    	'menugrid button[action=add]':{
 	    		click: function(){
 	    			// 获得窗体对象的引用

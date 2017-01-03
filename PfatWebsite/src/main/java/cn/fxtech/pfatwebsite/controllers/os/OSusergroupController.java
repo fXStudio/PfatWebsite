@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.pagehelper.PageInfo;
-
 import cn.fxtech.pfatwebsite.messages.FeedBackMessage;
 import cn.fxtech.pfatwebsite.models.OSuser;
 import cn.fxtech.pfatwebsite.models.OSusergroup;
@@ -66,12 +64,12 @@ public class OSusergroupController {
 	 */
 	@RequestMapping(value = "groupUserList")
 	public Object groupUserList(ConditionFiled cf) {
-		PageInfo<OSuser> info = new PageInfo<OSuser>(oSuserService.findRecords(cf));
+		List<OSuser> list = oSuserService.findRecords(cf);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("totalCount", info.getTotal());// 记录总数
-		map.put("items", info.getList());// 记录行对象
+		map.put("totalCount", list.size());// 记录总数
+		map.put("items", list);// 记录行对象
 
-		log.debug("Contains user: " + info.getTotal());
+		log.debug("Contains user: " + map.get("totalCount"));
 
 		return map;
 	}

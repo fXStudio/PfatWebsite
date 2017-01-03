@@ -10,7 +10,19 @@ Ext.define('MDStatusModule.controller.MDStatusController', {
     
     // Cotroller的业务处理
     init: function() {
-	    this.control({
+	    this.control({'textfield[name=searchField]': {
+	            specialkey: function(field, e){
+	                if (e.getKey() == e.ENTER) {
+	                    var gridPanel = this.getGridPanel();
+	                    gridPanel.getStore().filter({
+	                        filterFn: function(item) {
+	                            return !field.getValue() || 
+	                                   item.get("statusName") && item.get("statusName").indexOf(field.getValue()) > -1; 
+	                        }
+	                    });
+	                }
+	            }
+	        },
             'textfield[name=remark]': {// 密码项目的事件处理
             	specialkey: function(field, e){
                     if (e.getKey() == e.ENTER) {

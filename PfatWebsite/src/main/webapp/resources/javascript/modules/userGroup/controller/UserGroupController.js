@@ -10,7 +10,19 @@ Ext.define('UserGroupModule.controller.UserGroupController', {
     
     // Cotroller的业务处理
     init: function() {
-	    this.control({
+	    this.control({ 'textfield[name=searchField]': {
+	            specialkey: function(field, e){
+	                if (e.getKey() == e.ENTER) {
+	                    var gridPanel = this.getGroupGridPanel();
+	                    gridPanel.getStore().filter({
+	                        filterFn: function(item) {
+	                            return !field.getValue() || 
+	                                   item.get("groupName") && item.get("groupName").indexOf(field.getValue()) > -1; 
+	                        }
+	                    });
+	                }
+	            }
+	        },
 	    	'usergroupgrid button[action=add]':{
 	    		click: function(){
 	    			// 获得窗体对象的引用
