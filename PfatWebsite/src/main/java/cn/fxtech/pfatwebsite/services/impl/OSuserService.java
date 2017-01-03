@@ -2,7 +2,6 @@ package cn.fxtech.pfatwebsite.services.impl;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -118,7 +117,6 @@ final class OSuserService implements IOSuserService {
 			criteria.andEqualTo("username", cf.getUsername());
 			criteria.andEqualTo("password", cf.getPassword());
 		}
-		return systemUserMapper.selectByExampleAndRowBounds(condition,
-				new RowBounds(cf.getStart(), cf.getLimit() - cf.getStart()));
+		return systemUserMapper.selectByExample(condition);
 	}
 }

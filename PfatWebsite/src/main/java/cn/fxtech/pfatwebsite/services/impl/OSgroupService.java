@@ -3,7 +3,6 @@ package cn.fxtech.pfatwebsite.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +14,11 @@ import cn.fxtech.pfatwebsite.mappers.OSmenuMapper;
 import cn.fxtech.pfatwebsite.mappers.OSmenuitemMapper;
 import cn.fxtech.pfatwebsite.mappers.OSmenumenuitemMapper;
 import cn.fxtech.pfatwebsite.messages.FeedBackMessage;
-import cn.fxtech.pfatwebsite.models.OSusergroup;
 import cn.fxtech.pfatwebsite.models.OSgroupmenu;
 import cn.fxtech.pfatwebsite.models.OSmenu;
 import cn.fxtech.pfatwebsite.models.OSmenuitem;
 import cn.fxtech.pfatwebsite.models.OSmenumenuitem;
+import cn.fxtech.pfatwebsite.models.OSusergroup;
 import cn.fxtech.pfatwebsite.protocal.ConditionFiled;
 import cn.fxtech.pfatwebsite.services.IOSgroupService;
 import cn.fxtech.pfatwebsite.tree.CheckedNode;
@@ -180,7 +179,6 @@ final class OSgroupService implements IOSgroupService {
 	 */
 	@Override
 	public List<OSusergroup> findRecords(ConditionFiled cf) {
-		return systemGroupMapper.selectByExampleAndRowBounds(null,
-				new RowBounds(cf.getStart(), cf.getLimit() - cf.getStart()));
+		return systemGroupMapper.selectAll();
 	}
 }

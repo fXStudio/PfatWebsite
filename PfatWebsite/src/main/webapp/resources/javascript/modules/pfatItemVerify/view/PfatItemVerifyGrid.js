@@ -1,7 +1,10 @@
 Ext.define('PfatItemVerifyModule.view.PfatItemVerifyGrid', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.pfatitemverifygrid',
-	
+
+    enableColumnHide: false,
+	sortableColumns: false,
+	enableColumnMove: false,
     columns: [{ 
     	xtype: 'rownumberer',
     	align: 'center',

@@ -2,10 +2,11 @@ Ext.define('DataDictModule.view.DataDictGrid', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.datadictgrid',
 	
-    requires: ["Ext.plugins.Paging"],
-	
     selModel: { checkOnly: true },
     defaults: { sortable: true },
+    enableColumnHide: false,
+	sortableColumns: false,
+	enableColumnMove: false,
     columns: [{ 
     	xtype: 'rownumberer',
     	align: 'center',
@@ -46,11 +47,7 @@ Ext.define('DataDictModule.view.DataDictGrid', {
 	                    iconCls: 'update',
 	                    action: 'modify'
                 }]
-            }),
-            bbar: { // Bottom bar
-                xtype: 'paging',
-                store: store
-            }
+            })
         });
         // Call Parent Constructor
         this.callParent(arguments);

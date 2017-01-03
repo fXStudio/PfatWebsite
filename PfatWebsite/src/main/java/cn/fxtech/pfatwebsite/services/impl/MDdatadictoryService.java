@@ -2,7 +2,6 @@ package cn.fxtech.pfatwebsite.services.impl;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,7 @@ final class MDdatadictoryService implements IMDdatadictoryService {
 	@Override
 	public List<MDdatadictory> findRecords(ConditionFiled cf) {
 		log.debug("Search datadictionary.");
-		return mddataMapper.selectByExampleAndRowBounds(null, new RowBounds(cf.getStart(), cf.getLimit() - cf.getStart()));
+		return mddataMapper.selectAll();
 	}
 
 	/**

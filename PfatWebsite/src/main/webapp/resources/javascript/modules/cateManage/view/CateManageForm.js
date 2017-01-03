@@ -36,9 +36,9 @@ Ext.define('CateManageModule.view.CateManageForm', {
     }, {
         fieldLabel: '分数',
         name: 'cateScore',
-        maxLength: 3,
-        regex: new RegExp("^[1-9]\\d{0,2}$"),
-        regexText: '只能输入大于1的3位有效数字',
+        maxLength: 5,
+        regex: new RegExp("^\\d{1,3}(\\.\\d)?$"),
+        regexText: '只能输入0到999.9间的有效数字',
         allowBlank: false,
         selectOnFocus: true
     }, {

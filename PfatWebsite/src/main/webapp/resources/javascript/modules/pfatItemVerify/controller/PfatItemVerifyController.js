@@ -13,7 +13,7 @@ Ext.define('PfatItemVerifyModule.controller.PfatItemVerifyController', {
     // Cotroller的业务处理
     init: function() {
 	    this.control({
-	    	'deptpfatitemgrid': {
+	    	'pfatitemverifygrid': {
 	    		'itemclick': function(view, record, item, index, e, eOpts){
 	    			this.itemClick.call(this, record);
 	    		}
@@ -22,7 +22,7 @@ Ext.define('PfatItemVerifyModule.controller.PfatItemVerifyController', {
 	    		click: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
 	                Ext.MessageBox.confirm('审核通过', '项目【' + record.get('itemName') + '】确认审核通过吗?', function(res) {
 	                	if (res === 'yes') {
-	                		record.data.status = 1;
+	                		record.data.status = 2;
 	                		record.data.postil = null;
 	                		
 	                		Ext.Ajax.request({

@@ -3,7 +3,6 @@ package cn.fxtech.pfatwebsite.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -119,8 +118,7 @@ final class OSmenuService implements IOSmenuService {
 	 */
 	@Override
 	public List<OSmenu> findRecords(ConditionFiled cf) {
-		return systemMenuMapper.selectByExampleAndRowBounds(null,
-				new RowBounds(cf.getStart(), cf.getLimit() - cf.getStart()));
+		return systemMenuMapper.selectAll();
 	}
 
 	// ---------------------------------------------------- 私有方法

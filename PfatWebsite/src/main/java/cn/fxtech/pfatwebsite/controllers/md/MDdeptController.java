@@ -1,6 +1,7 @@
 package cn.fxtech.pfatwebsite.controllers.md;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.github.pagehelper.PageInfo;
 
 import cn.fxtech.pfatwebsite.models.MDdept;
 import cn.fxtech.pfatwebsite.models.OSuser;
@@ -85,13 +84,13 @@ public class MDdeptController {
 	 */
 	@RequestMapping(value = "mdDeptList")
 	public Object mdDeptList(ConditionFiled cf) {
-		PageInfo<MDdept> pageInfo = new PageInfo<MDdept>(mddeptService.findAll(cf));
+		List<MDdept> list = mddeptService.findAll(cf);
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("totalCount", pageInfo.getTotal());// 记录总数
-		map.put("items", pageInfo.getList());// 记录行对象
+		map.put("totalCount", list.size());// 记录总数
+		map.put("items", list);// 记录行对象
 
-		log.debug("Has dept items: " + pageInfo.getTotal());
+		log.debug("Has dept items: " + map.get("totalCount"));
 
 		return map;
 	}

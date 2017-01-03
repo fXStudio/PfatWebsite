@@ -3,6 +3,9 @@ Ext.define('DeptPfatItemModule.view.DeptPfatItemGrid', {
 	alias: 'widget.deptpfatitemgrid',
 	
     requires: ["Ext.plugins.Paging"],
+    enableColumnHide: false,
+	sortableColumns: false,
+	enableColumnMove: false,
 	
     columns: [{ 
     	xtype: 'rownumberer',

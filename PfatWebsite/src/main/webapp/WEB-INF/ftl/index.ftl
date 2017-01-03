@@ -24,7 +24,7 @@
     	    <div class='login-banner'></div>
             <img src="images/login-background.png" width="100%" height="100%"/>
 	    </div>
-	    <div class="corpation">@2016 fx-tech.cn. Zhong Guo Jian Cha Yuan</div>
+	    <div class="corpation">@2016 绩效考评信息管理系统</div>
 	
 	    <!-- Load Javascript lib -->
 	    <script src="javascript/extjs/ext-all.js"></script>

@@ -3,6 +3,9 @@ Ext.define('PfatItemVerifyModule.view.PfatFileNormalGrid', {
 	alias: 'widget.pfatfilenormalgrid',
 	
 	title: '考核文件',
+    enableColumnHide: false,
+	sortableColumns: false,
+	enableColumnMove: false,
 	columns: [{ 
     	xtype: 'rownumberer',
     	align: 'center',

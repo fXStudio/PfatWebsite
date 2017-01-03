@@ -2,7 +2,9 @@ Ext.define('MdDeptModule.view.MdDeptGrid', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.mddeptgrid',
 	
-    requires: ["Ext.plugins.Paging"],
+    enableColumnHide: false,
+	sortableColumns: false,
+	enableColumnMove: false,
 	
     selModel: { checkOnly: true },
     defaults: { sortable: true },
@@ -45,11 +47,7 @@ Ext.define('MdDeptModule.view.MdDeptGrid', {
                     iconCls: 'del',
                     action: 'del'
                 }]
-            }),
-            bbar: { // Bottom bar
-                xtype: 'paging',
-                store: store
-            }
+            })
         });
         // Call Parent Constructor
         this.callParent(arguments);

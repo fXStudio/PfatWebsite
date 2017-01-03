@@ -2,7 +2,6 @@ package cn.fxtech.pfatwebsite.services.impl;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,7 +77,6 @@ final class MDstatusService implements IMDstatusService {
 	 */
 	@Override
 	public List<MDstatus> findRecords(ConditionFiled cf) {
-		return msstatusMapper.selectByExampleAndRowBounds(null,
-				new RowBounds(cf.getStart(), cf.getLimit() - cf.getStart()));
+		return msstatusMapper.selectByExample(null);
 	}
 }

@@ -18,7 +18,7 @@ public class EMpfatitem {
 	private Integer cateId;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date compDate;
-	private Integer itemScore;
+	private Float itemScore;
 	private String docName;
 	private Integer deptId;
 	private String officeName;
@@ -58,14 +58,6 @@ public class EMpfatitem {
 
 	public void setCompDate(Date compDate) {
 		this.compDate = compDate;
-	}
-
-	public Integer getItemScore() {
-		return itemScore;
-	}
-
-	public void setItemScore(Integer itemScore) {
-		this.itemScore = itemScore;
 	}
 
 	public String getDocName() {
@@ -130,5 +122,13 @@ public class EMpfatitem {
 
 	public void setPostil(String postil) {
 		this.postil = postil;
+	}
+
+	public Float getItemScore() {
+		return itemScore;
+	}
+
+	public void setItemScore(Float itemScore) {
+		this.itemScore = itemScore;
 	}
 }

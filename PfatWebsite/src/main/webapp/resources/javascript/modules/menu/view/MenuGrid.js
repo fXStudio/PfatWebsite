@@ -2,10 +2,11 @@ Ext.define('MenuModule.view.MenuGrid', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.menugrid',
 	
-    requires: ["Ext.plugins.Paging"],
-	
     selModel: { checkOnly: true },
     defaults: { sortable: true },
+    enableColumnHide: false,
+	sortableColumns: false,
+	enableColumnMove: false,
     columns: [{ 
     	xtype: 'rownumberer',
     	align: 'center',
@@ -45,11 +46,7 @@ Ext.define('MenuModule.view.MenuGrid', {
                     iconCls: 'del',
                     action: 'del'
                 }]
-            }),
-            bbar: { // Bottom bar
-                xtype: 'paging',
-                store: store
-            }
+            })
         });
         // Call Parent Constructor
         this.callParent(arguments);

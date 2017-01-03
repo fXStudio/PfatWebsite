@@ -2,8 +2,9 @@ Ext.define('VerifyResultModule.view.VerifyResultGrid', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.verifyresultgrid',
 	
-    requires: ["Ext.plugins.Paging"],
-	
+    enableColumnHide: false,
+	sortableColumns: false,
+	enableColumnMove: false,
     columns: [{ 
     	xtype: 'rownumberer',
     	align: 'center',

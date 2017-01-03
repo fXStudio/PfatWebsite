@@ -1,6 +1,7 @@
 package cn.fxtech.pfatwebsite.controllers.os;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -44,12 +45,12 @@ public class OSusergroupController {
 	 */
 	@RequestMapping(value = "userGroupList")
 	public Object userGroupList(ConditionFiled cf) {
-		PageInfo<OSusergroup> info = new PageInfo<OSusergroup>(systemGroupService.findRecords(cf));
+		List<OSusergroup> list = systemGroupService.findRecords(cf);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("totalCount", info.getTotal());// 记录总数
-		map.put("items", info.getList());// 记录行对象
+		map.put("totalCount", list.size());// 记录总数
+		map.put("items", list);// 记录行对象
 
-		log.debug("Contains usergroup: " + info.getTotal());
+		log.debug("Contains usergroup: " + map.get("totalCount"));
 
 		return map;
 	}

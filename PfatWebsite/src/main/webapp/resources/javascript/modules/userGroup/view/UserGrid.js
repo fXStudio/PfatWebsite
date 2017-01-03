@@ -5,6 +5,9 @@ Ext.define('UserGroupModule.view.UserGrid', {
 	tbar: [ '<strong>组内用户列表</strong>' ],
     selModel: { checkOnly: true },
     defaults: { sortable: true },
+	enableColumnHide: false,
+	sortableColumns: false,
+	enableColumnMove: false,
     columns: [{ 
     	xtype: 'rownumberer',
     	align: 'center',

@@ -3,6 +3,9 @@ Ext.define('PfatItemModule.view.PfatItemGrid', {
 	alias: 'widget.pfatitemgrid',
 
     xtype: 'cell-editing',
+	sortableColumns: false,
+	enableColumnMove: false,
+	enableColumnHide: false,
 
     /**
      * Component Init
@@ -133,7 +136,8 @@ Ext.define('PfatItemModule.view.PfatItemGrid', {
                     xtype: 'numberfield',
                     allowBlank: false,
                     editable: false,
-                    minValue: 1,
+                    step: 0.1,
+                    minValue: 0,
                     maxValue: 100
                 }
             }, {

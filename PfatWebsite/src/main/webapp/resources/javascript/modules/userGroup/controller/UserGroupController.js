@@ -154,7 +154,7 @@ Ext.define('UserGroupModule.controller.UserGroupController', {
 	    var me = this, gridPanel = me.getGroupGridPanel(), store = gridPanel.getStore();
 	    
         // 装载数据
-        store.load({params: { start: 0, limit: 25 }});
+        store.load();
 
 	    // 设置首行选中
         store.on("load", function(obj, records){

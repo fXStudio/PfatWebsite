@@ -12,7 +12,7 @@ public class EMcategory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String cateName;
-	private Integer cateScore;
+	private Float cateScore;
 	private Integer parentId;
 	private String remark;
 	private Integer depth;
@@ -43,14 +43,6 @@ public class EMcategory {
 		this.cateName = cateName;
 	}
 
-	public Integer getCateScore() {
-		return cateScore;
-	}
-
-	public void setCateScore(Integer cateScore) {
-		this.cateScore = cateScore;
-	}
-
 	public Integer getParentId() {
 		return parentId;
 	}
@@ -73,5 +65,13 @@ public class EMcategory {
 
 	public void setDepth(Integer depth) {
 		this.depth = depth;
+	}
+
+	public Float getCateScore() {
+		return cateScore;
+	}
+
+	public void setCateScore(Float cateScore) {
+		this.cateScore = cateScore;
 	}
 }

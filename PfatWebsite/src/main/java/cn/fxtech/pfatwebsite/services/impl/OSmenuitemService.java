@@ -2,7 +2,6 @@ package cn.fxtech.pfatwebsite.services.impl;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,7 +82,7 @@ final class OSmenuitemService implements IOSmenuitemService {
 	 */
 	@Override
 	public List<OSmenuitem> findRecords(ConditionFiled cf) {
-		return systemMenuItemMapper.selectByExampleAndRowBounds(null, new RowBounds(cf.getStart(), cf.getLimit() - cf.getStart()));
+		return systemMenuItemMapper.selectAll();
 	}
 
 	// -------------------------------------------------- Private Methond

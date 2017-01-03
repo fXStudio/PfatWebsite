@@ -3,6 +3,9 @@ Ext.define('PfatItemVerifyModule.view.PfatFileExtraGrid', {
 	alias: 'widget.pfatfileextragrid',
 	
 	title: '加分文件',
+    enableColumnHide: false,
+	sortableColumns: false,
+	enableColumnMove: false,
 	columns: [{ 
     	xtype: 'rownumberer',
     	align: 'center',

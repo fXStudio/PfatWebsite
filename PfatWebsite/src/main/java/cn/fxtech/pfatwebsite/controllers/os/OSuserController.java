@@ -1,6 +1,7 @@
 package cn.fxtech.pfatwebsite.controllers.os;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -9,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.github.pagehelper.PageInfo;
 
 import cn.fxtech.pfatwebsite.messages.FeedBackMessage;
 import cn.fxtech.pfatwebsite.models.OSuser;
@@ -41,12 +40,12 @@ public class OSuserController {
 	 */
 	@RequestMapping(value = "systemUserList")
 	public Object systemUserList(ConditionFiled cf) {
-		PageInfo<OSuser> pageInfo = new PageInfo<OSuser>(oSuserService.findRecords(cf));
+		List<OSuser> pageInfo = oSuserService.findRecords(cf);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("totalCount", pageInfo.getTotal());// 记录总数
-		map.put("items", pageInfo.getList());// 记录行对象
+		map.put("totalCount", pageInfo.size());// 记录总数
+		map.put("items", pageInfo);// 记录行对象
 		
-		log.debug("Contains user: " + pageInfo.getTotal());
+		log.debug("Contains user: " + map.get("totalCount"));
 
 		return map;
 	}

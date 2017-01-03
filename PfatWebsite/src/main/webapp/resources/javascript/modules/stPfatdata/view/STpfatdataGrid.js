@@ -57,15 +57,15 @@ Ext.define('STpfatdataModule.view.STpfatdataGrid', {
         width: 160,
         dataIndex: 'deptName'
     }, {
-        header: '办公室',
+        header: '负责处室',
         width: 160,
         dataIndex: 'officeName'
     },{
-        header: '电话',
+        header: '办公电话',
         width: 90,
         dataIndex: 'telPhone'
     }, {
-        header: '联系人',
+        header: '负责人',
         width: 80,
         dataIndex: 'personName'
     }, {
