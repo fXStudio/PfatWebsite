@@ -1,10 +1,10 @@
 package cn.fxtech.pfatwebsite.helper.excel.inters;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import cn.fxtech.pfatwebsite.helper.excel.entities.ExportModel;
+import cn.fxtech.pfatwebsite.models.STpfatdata;
 
 public interface IConvertor {
-	public List<ExportModel> convertMapToModelList(@SuppressWarnings("rawtypes") List<LinkedHashMap> list);
+	public List<ExportModel> convertMapToModelList(List<STpfatdata> list);
 }

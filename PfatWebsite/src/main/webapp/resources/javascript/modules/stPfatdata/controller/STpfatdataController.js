@@ -26,12 +26,7 @@ Ext.define('STpfatdataModule.controller.STpfatdataController', {
              },
              'button[name=export2Excel]': {
                  click: function(button, evt, options){
-                	 var arr = [];
-                	 
-                	 this.getGridPanel().getStore().each(function(record){
-                		arr.push(record.data); 
-                	 });
-                     window.location.href = "services/statisExport?items=" + JSON.stringify(arr);
+                     window.location.href = "services/statisExport"
                  }
              },
              'actioncolumn[iconCls=detail]': {

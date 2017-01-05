@@ -137,6 +137,10 @@ public class EMpfatfileController {
 		response.setHeader("Content-disposition",
 				"attachment;filename=" + new String(pfatfile.getFileName().getBytes("gb2312"), "iso8859-1"));
 
-		FileUtils.copyFile(new File(pfatfile.getFilePath()), response.getOutputStream());
+		try {
+			FileUtils.copyFile(new File(pfatfile.getFilePath()), response.getOutputStream());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
