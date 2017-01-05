@@ -133,16 +133,10 @@ public class EMpfatfileController {
 	public void pfatfileDownload(Integer id, HttpServletResponse response) throws IOException {
 		EMpfatfile pfatfile = empfatfileService.findRecordById(id);
 
-		String fileName = new String(pfatfile.getFileName().getBytes("gb2312"), "iso8859-1");
-
 		response.setContentType("application/force-download");
-		response.setHeader("Content-disposition", "attachment;filename=" + fileName);
+		response.setHeader("Content-disposition",
+				"attachment;filename=" + new String(pfatfile.getFileName().getBytes("gb2312"), "iso8859-1"));
 
-		try {
-			FileUtils.copyFile(new File(pfatfile.getFilePath()), response.getOutputStream());
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			response.getOutputStream().write(new byte[0]);
-		}
+		FileUtils.copyFile(new File(pfatfile.getFilePath()), response.getOutputStream());
 	}
 }

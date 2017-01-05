@@ -1,49 +1,23 @@
-package cn.fxtech.pfatwebsite.models;
-
-import java.sql.Date;
-
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+package cn.fxtech.pfatwebsite.helper.excel.entities;
 
 /**
- * 数据统计
+ * 导出数据模型
  * 
- * @author Administrator
+ * @author Ajaxfan
  */
-@Table(name = "pfat_statis_view")
-public class STpfatdata {
-	private Integer id;
+public class ExportModel {
 	private String firstCate;
 	private String secondCate;
 	private String thirdCate;
 	private String itemName;
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date compDate;
-	private Float itemScore;
+	private String compDate;
+	private String itemScore;
 	private String docName;
 	private String deptName;
 	private String officeName;
 	private String telPhone;
 	private String personName;
-	private Integer status;
-	private String createYear;
-
-	public String getCreateYear() {
-		return createYear;
-	}
-
-	public void setCreateYear(String createYear) {
-		this.createYear = createYear;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	private String status;
 
 	public String getFirstCate() {
 		return firstCate;
@@ -77,19 +51,19 @@ public class STpfatdata {
 		this.itemName = itemName;
 	}
 
-	public Date getCompDate() {
+	public String getCompDate() {
 		return compDate;
 	}
 
-	public void setCompDate(Date compDate) {
+	public void setCompDate(String compDate) {
 		this.compDate = compDate;
 	}
 
-	public Float getItemScore() {
+	public String getItemScore() {
 		return itemScore;
 	}
 
-	public void setItemScore(Float itemScore) {
+	public void setItemScore(String itemScore) {
 		this.itemScore = itemScore;
 	}
 
@@ -117,14 +91,6 @@ public class STpfatdata {
 		this.officeName = officeName;
 	}
 
-	public String getPersonName() {
-		return personName;
-	}
-
-	public void setPersonName(String personName) {
-		this.personName = personName;
-	}
-
 	public String getTelPhone() {
 		return telPhone;
 	}
@@ -133,11 +99,19 @@ public class STpfatdata {
 		this.telPhone = telPhone;
 	}
 
-	public Integer getStatus() {
+	public String getPersonName() {
+		return personName;
+	}
+
+	public void setPersonName(String personName) {
+		this.personName = personName;
+	}
+
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 }

@@ -55,7 +55,8 @@ public class EMpfatitemController {
 	 * @return
 	 */
 	@RequestMapping(value = "pfatitemList")
-	public Object pfatitemList(EMpfatitem item) {
+	public Object pfatitemList(EMpfatitem item, HttpServletRequest request) {
+		item.setCreateYear((String) request.getSession(false).getAttribute("createYear"));
 		List<EMpfatitem> list = empfatitemService.findRecords(item);
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -79,9 +80,10 @@ public class EMpfatitemController {
 	 */
 	@RequestMapping(value = "deptitemList")
 	public Object deptitemList(HttpServletRequest request, @RequestParam(value = "status") String status) {
-		OSuser user = (OSuser) request.getSession().getAttribute("pfatUser");
+		OSuser user = (OSuser) request.getSession(false).getAttribute("pfatUser");
 
-		List<EMpfatitem> list = empfatitemService.findRecordsByDept(user.getDeptId(), status);
+		List<EMpfatitem> list = empfatitemService.findRecordsByDept(user.getDeptId(), status,
+				(String) request.getSession(false).getAttribute("createYear"));
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("totalCount", list.size());// 记录总数
@@ -124,8 +126,10 @@ public class EMpfatitemController {
 	 * @return
 	 */
 	@RequestMapping(value = "pfatitemModify")
-	public Object statusModify(EMpfatitem item) {
+	public Object statusModify(EMpfatitem item, HttpServletRequest request) {
 		log.debug("Save | Update pfatitem name is: " + item.getItemName());
+
+		item.setCreateYear((String) request.getSession(false).getAttribute("createYear"));
 
 		return empfatitemService.addOrUpdate(item);
 	}
@@ -142,13 +146,13 @@ public class EMpfatitemController {
 	 * @throws IllegalAccessException
 	 * @throws ParseException
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "pfatitemAdjust")
-	public Object pfatitemAdjust(HttpServletRequest request) throws JsonParseException, JsonMappingException,
-			IOException, IllegalAccessException, InvocationTargetException, ParseException {
+	public Object pfatitemAdjust(HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException,
+			IllegalAccessException, InvocationTargetException, ParseException {
 		List<EMpfatitem> list = new ArrayList<EMpfatitem>();
 
-		for (LinkedHashMap map : (List<LinkedHashMap>) new ObjectMapper().readValue(request.getParameter("items"),
-				List.class)) {
+		for (LinkedHashMap map : (List<LinkedHashMap>) new ObjectMapper().readValue(request.getParameter("items"), List.class)) {
 			EMpfatitem em = new EMpfatitem();
 			for (Field field : em.getClass().getDeclaredFields()) {
 				if ("compDate".equals(field.getName())) {
@@ -159,7 +163,6 @@ public class EMpfatitemController {
 			}
 			list.add(em);
 		}
-
 		return empfatitemService.adjustPfatitem(list);
 	}
 }

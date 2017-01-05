@@ -25,8 +25,13 @@ Ext.define('STpfatdataModule.controller.STpfatdataController', {
                  }
              },
              'button[name=export2Excel]': {
-                 click: function(field, e){
-                     
+                 click: function(button, evt, options){
+                	 var arr = [];
+                	 
+                	 this.getGridPanel().getStore().each(function(record){
+                		arr.push(record.data); 
+                	 });
+                     window.location.href = "services/statisExport?items=" + JSON.stringify(arr);
                  }
              },
              'actioncolumn[iconCls=detail]': {
@@ -39,7 +44,6 @@ Ext.define('STpfatdataModule.controller.STpfatdataController', {
                     Ext.each([this.getNormalPanel(), this.getExtraPanel()], function(panel, index){
                         panel.getStore().load({params: {pfatitemId: record.get('id'), cate: index}});
                     });
-                    
                     window.show(); // 显示窗体
                     window.center();// 窗体居中显示
                 }
@@ -67,6 +71,8 @@ Ext.define('STpfatdataModule.controller.STpfatdataController', {
             setTimeout(function(){
                 gridPanel.merge(gridPanel, 0, 3);
             }, 0.5);
+            
+            Ext.getCmp('exportBtn').setDisabled(!store.getCount());
 		});
 		
 		store.on("filterchange", function(store, filters, eOpts ) {

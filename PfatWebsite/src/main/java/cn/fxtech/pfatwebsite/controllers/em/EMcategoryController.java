@@ -51,10 +51,11 @@ public class EMcategoryController {
 	 * @throws JsonProcessingException
 	 */
 	@RequestMapping(value = "cateTreeList")
-	public Object cateTreeList(@RequestParam(value = "cateName", required = false) String catename) throws JsonProcessingException {
+	public Object cateTreeList(@RequestParam(value = "cateName", required = false) String catename, HttpServletRequest request)
+			throws JsonProcessingException {
 		Map<String, Object> res = new HashMap<String, Object>();
 		res.put("cateName", ".");
-		res.put("children", emcategoryService.getCateTreeModel(0));
+		res.put("children", emcategoryService.getCateTreeModel(0, (String) request.getSession(false).getAttribute("createYear")));
 
 		log.debug("Request category tree list: " + new ObjectMapper().writeValueAsString(res));
 
@@ -80,10 +81,11 @@ public class EMcategoryController {
 	 * @return
 	 */
 	@RequestMapping(value = "categoryModify")
-	public Object categoryModify(EMcategory cate) {
+	public Object categoryModify(EMcategory cate, HttpServletRequest request) {
 		log.debug("Request save&modify category: " + cate.getCateName());
 		log.debug("Request save&modify category: " + cate.getDepth());
 		log.debug("Request save&modify category: " + cate.getIndex());
+		cate.setCreateYear((String) request.getSession(false).getAttribute("createYear"));
 
 		return emcategoryService.addOrUpdate(cate);
 	}
@@ -99,6 +101,7 @@ public class EMcategoryController {
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "categoryAdjust")
 	public Object categoryAdjust(HttpServletRequest request)
 			throws JsonParseException, JsonMappingException, IOException, IllegalAccessException, InvocationTargetException {
@@ -111,7 +114,6 @@ public class EMcategoryController {
 			}
 			list.add(em);
 		}
-
 		return emcategoryService.adjustCateTree(list);
 	}
 }

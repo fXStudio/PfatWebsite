@@ -31,6 +31,15 @@ public class EMpfatitem {
 	@Transient
 	private Integer index;
 	private Integer itemNo;
+	private String createYear;
+
+	public String getCreateYear() {
+		return createYear;
+	}
+
+	public void setCreateYear(String createYear) {
+		this.createYear = createYear;
+	}
 
 	public Integer getId() {
 		return id;

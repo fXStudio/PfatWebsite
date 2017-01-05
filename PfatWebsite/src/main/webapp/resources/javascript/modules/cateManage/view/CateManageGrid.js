@@ -32,7 +32,7 @@ Ext.define('CateManageModule.view.CateManageGrid', {
        align: 'center',
        iconCls: 'add',
        isDisabled: function(view, rowIdx, colIdx, item, record) {
-           return !record.data.depth || record.data.depth === 3;
+           return record.data.depth === 3;
        }
    }, {
        text: '',

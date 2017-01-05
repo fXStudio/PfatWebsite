@@ -8,5 +8,5 @@ import cn.fxtech.pfatwebsite.models.STpfatdata;
  * @author FXStudio.Ajaxfan
  */
 public interface ISTpfatdataService {
-	public List<STpfatdata> findAll();
+	public List<STpfatdata> findAll(String createYear);
 }

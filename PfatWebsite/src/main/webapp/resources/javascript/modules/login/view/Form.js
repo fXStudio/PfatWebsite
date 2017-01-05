@@ -15,7 +15,7 @@ Ext.define('LoginModule.view.Form' ,{
         split: false,
     	defaults: {
 	    	xtype: 'textfield',
-	        labelWidth: 80,
+	        labelWidth: 90,
 	        labelAlign: 'right',
 	        anchor: '98%',
 	        allowBlank: false,
@@ -40,7 +40,17 @@ Ext.define('LoginModule.view.Form' ,{
 	            name: 'password',
 	            fieldLabel: '要提交到后台的代码',
 	            hidden: true
-	        }
+	        }, {
+	        	xtype: 'numberfield',
+                name: 'createYear',
+                editable: false,
+                step: 1,
+                fieldLabel: '考核年份',
+                value: new Date().getFullYear(),
+                minValue: 2016,
+                maxValue: new Date().getFullYear() + 100,
+                allowBlank: false
+            }
 	    ],
 	    buttons: [
 	        {text: '重置', action: 'reset'}, 

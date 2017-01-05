@@ -80,6 +80,7 @@ final class EMpfatitemService implements IEMpfatitemService {
 		Example condition = new Example(EMpfatitem.class);
 		condition.setOrderByClause("itemNo");
 		Criteria criteria = condition.createCriteria();
+		criteria.andEqualTo("createYear", pfatitem.getCreateYear());
 
 		if (pfatitem.getCateId() != null) {// 按分类搜索
 			log.debug("Search pfatitems by cateid: " + pfatitem.getCateId());
@@ -98,11 +99,11 @@ final class EMpfatitemService implements IEMpfatitemService {
 	 * 查询部门的考核项目
 	 */
 	@Override
-	public List<EMpfatitem> findRecordsByDept(Integer deptId, String status) {
+	public List<EMpfatitem> findRecordsByDept(Integer deptId, String status, String createYear) {
 		log.debug("Search pfatitems by dept id: " + deptId);
 		log.debug("Search pfatitems by dept status: " + status);
 
-		return empfatitemMapper.findRecords(deptId, status);
+		return empfatitemMapper.findRecords(deptId, status, createYear);
 	}
 
 	/**

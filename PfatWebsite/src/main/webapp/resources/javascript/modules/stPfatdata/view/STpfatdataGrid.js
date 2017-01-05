@@ -133,6 +133,7 @@ Ext.define('STpfatdataModule.view.STpfatdataGrid', {
             bbar: [{
                 xtype: 'button',
                 name: 'export2Excel',
+                id: 'exportBtn',
                 text: '导出 Excel',
                 iconCls: 'excel'
             },'->', '查询考核项目',{

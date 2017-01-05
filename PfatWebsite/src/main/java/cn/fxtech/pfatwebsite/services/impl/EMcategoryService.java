@@ -37,6 +37,7 @@ final class EMcategoryService implements IEMcategoryService {
 		Criteria criteria = condition.createCriteria();
 		criteria.andNotEqualTo("id", cate.getId());
 		criteria.andEqualTo("cateName", cate.getCateName());
+		criteria.andEqualTo("createYear", cate.getCreateYear());
 
 		if (emcategoryMapper.selectCountByExample(condition) > 0) {
 			log.debug("Category name duplicate: " + cate.getCateName());
@@ -71,10 +72,10 @@ final class EMcategoryService implements IEMcategoryService {
 	 * 分类树模型
 	 */
 	@Override
-	public List<Map<String, Object>> getCateTreeModel(Integer parentId) {
+	public List<Map<String, Object>> getCateTreeModel(Integer parentId, String createYear) {
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 
-		for (EMcategory cate : emcategoryMapper.findByParentId(parentId)) {
+		for (EMcategory cate : emcategoryMapper.findByParentId(parentId, createYear)) {
 			// 用DynaBean来做树节点对象(利用Json的灵活性特点，不需要单独声明类)
 			Map<String, Object> map = BeanUtils.createMap(cate);
 
@@ -84,7 +85,7 @@ final class EMcategoryService implements IEMcategoryService {
 			map.put("iconCls", isLeaf ? "leaf_node" : "branch_node");
 
 			if (!isLeaf) {// 只有非叶子节点才能有子节点
-				map.put("children", getCateTreeModel(cate.getId()));
+				map.put("children", getCateTreeModel(cate.getId(), createYear));
 				map.put("expanded", true);
 			}
 			result.add(map);

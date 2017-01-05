@@ -18,6 +18,15 @@ public class EMcategory {
 	private Integer depth;
 	@Column(name = "cate_no")
 	private Integer index;
+	private String createYear;
+
+	public String getCreateYear() {
+		return createYear;
+	}
+
+	public void setCreateYear(String createYear) {
+		this.createYear = createYear;
+	}
 
 	public Integer getIndex() {
 		return index;

@@ -210,6 +210,12 @@ Ext.define('PfatItemModule.view.PfatItemGrid', {
                 field: {
                     xtype: 'textfield'
                 }
+            }, {
+                dataIndex: 'createYear',
+                hidden: true
+            }, {
+                dataIndex: 'index',
+                hidden: true
             }],
             tbar: Ext.create('Ext.toolbar.Toolbar', {
                 items: [{

@@ -16,6 +16,10 @@ Ext.define('CateManageModule.view.CateManageForm', {
         hidden: true,
         hideLabel: true
     }, {
+        name: 'createYear',
+        hidden: true,
+        hideLabel: true
+    }, {
         name: 'depth',
         hidden: true,
         hideLabel: true
