@@ -1,5 +1,7 @@
 package cn.fxtech.pfatwebsite.helper;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +57,8 @@ public class Office2Swf {
 		String command = getCommand(pdfInputFilePath, swfOutFilePath);
 		try {
 			Process pro = Runtime.getRuntime().exec(command);
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(pro.getInputStream()));
+			while (bufferedReader.readLine() != null);
 			pro.waitFor();
 			return pdfInputFilePath.replaceAll("." + getPostfix(pdfInputFilePath), ".swf");
 		} catch (Exception ex) {

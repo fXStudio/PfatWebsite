@@ -2,7 +2,7 @@ Ext.define('PfatItemVerifyModule.view.PreviewWindow', {
 	extend: 'Ext.window.Window',
 	alias: 'widget.previewwindow',
 	
-	title: '文档在线预览',
+	title: '在线预览',
     iconCls: 'feed-icon',
     resizable: false,
     modal: true,

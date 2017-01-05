@@ -97,9 +97,8 @@ Ext.define('PfatItemVerifyModule.controller.PfatItemVerifyController', {
 	    	 },
 	    	 'actioncolumn[iconCls=preview]': {// 添加分类信息
 	    		 click: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
-	    			 if(record.get('fileName').match(/\.(doc|docx|xls|xlsx)$/)) {
+	    			 if(record.get('fileName').match(/\.(doc|docx|xls|xlsx|pdf)$/i)) {
 	    				 var mask = new Ext.LoadMask(Ext.getBody(), {msg:"数据处理中请稍后......"}); mask.show();
-       	              	 var previewWindow = this.getPreviewWindow();
 	    				 
 	    				 Ext.Ajax.request({
                             url: 'services/preview',
@@ -107,9 +106,12 @@ Ext.define('PfatItemVerifyModule.controller.PfatItemVerifyController', {
                             params: record.data,
                             success: function(response, options) {
               	              	mask.hide();
-	     						// 判断窗体对象是否存在, 如果不存在，就创建一个新的窗体对象
-	     						if(!previewWindow){previewWindow = Ext.create('PfatItemVerifyModule.view.PreviewWindow');}
-	     						
+              	              	var previewWindow = Ext.create('PfatItemVerifyModule.view.PreviewWindow', {
+	  	    	            		items: {
+	  	    	            	    	id: 'preview',
+	  	    	            	    	html: '<iframe src="preview" width="100%" height="100%" scrolling="no"></iframe>'
+	  	    	            	    }
+	  	    	            	});
 	     						previewWindow.show(); // 显示窗体
 	     						previewWindow.center();// 窗体居中显示
                             },
@@ -118,6 +120,17 @@ Ext.define('PfatItemVerifyModule.controller.PfatItemVerifyController', {
                                 Ext.MessageBox.alert('失败', '预览文件生成失败');
                             }
                         });
+	    			 } else if(record.get('fileName').match(/\.(jpg|gif|png|bmp)$/i)) {
+      	              	var previewWindow = Ext.create('PfatItemVerifyModule.view.PreviewWindow', {
+		      	            resizable: false,
+		      	    		items: [{  
+		      	    			id: 'img',
+		      	    			autoScroll: true,
+		      	    			html: '<img src="services/pfatfileDownload?id=' + record.data.id + '"/>'
+		      	    		}]
+    	            	});
+ 						previewWindow.show(); // 显示窗体
+ 						previewWindow.center();// 窗体居中显示
 	    			 }
 	    		 }
 	    	 },

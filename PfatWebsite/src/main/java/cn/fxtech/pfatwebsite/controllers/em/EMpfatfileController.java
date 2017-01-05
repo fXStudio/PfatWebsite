@@ -118,7 +118,6 @@ public class EMpfatfileController {
 	@ResponseBody
 	public Object pfatfileUpload(EMpfatfile file, HttpServletResponse response) throws JsonProcessingException {
 		log.debug("User request add pfatfile.");
-
 		return new ObjectMapper().writeValueAsString(empfatfileService.add(file));
 	}
 

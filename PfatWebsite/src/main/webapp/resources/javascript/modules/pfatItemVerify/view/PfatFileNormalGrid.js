@@ -36,7 +36,7 @@ Ext.define('PfatItemVerifyModule.view.PfatFileNormalGrid', {
         tooltip: '预览',
         iconCls: 'preview',
         isDisabled: function(view, rowIndex, colIndex, item, record){
-            return !record.get('fileName').match(/\.(doc|docx|xls|xlsx)$/);
+            return !record.get('fileName').match(/\.(doc|docx|xls|xlsx|pdf|jpg|gif|png|bmp)$/);
         }
     }],
     /**

@@ -123,8 +123,7 @@ Ext.define('CateManageModule.view.CateManageGrid', {
         	  style: 'margin-right:20px',
         	  listeners: {
         		  click: function(){
-        			  store.reload();
-        			  me.view.refresh();
+        			  me.resetView();
         		  }
         	  }
            }],
@@ -175,13 +174,7 @@ Ext.define('CateManageModule.view.CateManageGrid', {
 	                         params: {cates: JSON.stringify(arr)},
 	                         method: 'POST',
 	                         success: function(response, options) {
-                             	store.reload();
-                             	store.on({
-                             		'load': function(){
-	                         			  me.view.refresh();
-	                    	              mask.hide();
-                             		}
-                             	});
+                             	me.resetView(mask);
 	                         },
 	                         failure: function(response, action) {
 	              	             mask.hide();
@@ -190,6 +183,15 @@ Ext.define('CateManageModule.view.CateManageGrid', {
 	                   });
                    }
                }
+           },
+           resetView: function(mask){
+        	   store.reload();
+               store.on({
+                   'load': function(){
+                	   me.view.refresh();
+       	               if(mask) { mask.hide(); }
+                   }
+               });
            }
        });
        this.callParent();

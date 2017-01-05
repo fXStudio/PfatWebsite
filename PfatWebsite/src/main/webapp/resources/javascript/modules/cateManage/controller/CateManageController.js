@@ -58,7 +58,7 @@ Ext.define('CateManageModule.controller.CateManageController', {
 		                            params: { id: record.get('id') },
 		                            method: 'POST',
 		                            success: function(response, options) {
-	                                	gridObj.getStore().reload();
+		                            	gridPanel.resetView();
 		                            },
 		                            failure: function(response, action) {
 		                                Ext.MessageBox.alert('失败', '操作失败：' + action.result.failureReason);
@@ -92,8 +92,7 @@ Ext.define('CateManageModule.controller.CateManageController', {
 	        	click: function() {
 	                var formObj = this.getFormPanel().getForm();
 	                var gridPanel = this.getGridPanel();
-	            	var window = this.getWindow();
-	                
+	            	
 	                // 检查表单项的录入是否存在问题
 	                if (formObj.isValid()) {
 	                    formObj.submit({
@@ -101,14 +100,13 @@ Ext.define('CateManageModule.controller.CateManageController', {
 	                        waitTitle: '提示', // 标题  
 	                        url: 'services/categoryModify', // 请求的url地址  
 	                        method: 'POST', // 请求方式  
-	                        success: function(form, action) { // 添加数据成功后，重新加载数据源刷新表单 
-	                        	gridPanel.getStore().reload();
+	                        success: function(form, action) { // 添加数据成功后，重新加载数据源刷新表单
+	                        	window.location.reload();
 	                        },
 	                        failure: function(form, action) { // 添加失败后，提示用户添加异常
 	                            Ext.Msg.alert('失败', '操作未完成，原因：' + action.result.failureReason);
 	                        }
 	                    });
-	                    setTimeout(function() { window.hide(); }, 100);
 	                }
 	            }
 	        },

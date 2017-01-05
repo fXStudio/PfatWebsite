@@ -40,7 +40,7 @@ final class EMpfatfileService implements IEMpfatfileService {
 	@Transactional
 	public FeedBackMessage add(EMpfatfile file) {
 		try {
-			file.setFileName(file.getFileStream().getOriginalFilename());
+			file.setFileName(file.getFileStream().getOriginalFilename().replaceAll(" +", "_"));
 
 			if (empfatfileMapper.isExists(file) > 0) {
 				return new FeedBackMessage(false, "文件名称重复");
@@ -97,8 +97,14 @@ final class EMpfatfileService implements IEMpfatfileService {
 
 		String inputFilePath = pfatfile.getFilePath();
 		String outFilePath = inputFilePath.replace(new File(inputFilePath).getName(),
-				System.currentTimeMillis() + ".swf");
-		
-		return office2swf.office2Swf(inputFilePath, outFilePath);
+				new File(inputFilePath).getName() + ".swf");
+
+		if (inputFilePath.endsWith("pdf")) {
+			log.debug("PDF convert to swf.");
+			return office2swf.pdf2Swf(inputFilePath, (outFilePath.replaceAll(".pdf", "")));
+		} else {
+			log.debug("Office convert to swf.");
+			return office2swf.office2Swf(inputFilePath, outFilePath);
+		}
 	}
 }
